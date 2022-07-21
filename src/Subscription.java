@@ -54,6 +54,14 @@ public abstract class Subscription implements ServiceType{
         return services;
     }
 
+    public boolean addService(Service s){
+        if(!services.contains(s)){
+            services.add(s);
+            return true;
+        }
+        return false;
+    }
+
     public boolean equals(Object o){
         if(o instanceof Subscription s){
             return s.idNumber.equals(idNumber);
