@@ -3,13 +3,22 @@ import java.util.Objects;
 
 public class Service {
     private String ID;
-    private String serviceType;
+    private ServiceType serviceType=new ServiceType() {
+        @Override
+        public boolean getSimCard() {
+            return true;
+        }
+
+        @Override
+        public boolean getVoice() {
+            return true;
+        }
+    };
     private LocalDate createdDate;
     private State state;
 
-    public Service(String serviceType, LocalDate createdDate, State state) {
+    public Service( LocalDate createdDate, State state) {
         ID=GenerateId.Service.getId();
-        this.serviceType = serviceType;
         this.createdDate = createdDate;
         this.state = state;
     }
@@ -18,9 +27,6 @@ public class Service {
         return ID;
     }
 
-    public String getServiceType() {
-        return serviceType;
-    }
 
     public LocalDate getCreatedDate() {
         return createdDate;
@@ -28,10 +34,6 @@ public class Service {
 
     public State getState() {
         return state;
-    }
-
-    public void setServiceType(String serviceType) {
-        this.serviceType = serviceType;
     }
 
     public void setCreatedDate(LocalDate createdDate) {
@@ -44,7 +46,12 @@ public class Service {
 
     @Override
     public String toString() {
-        return  String.format("%S : %s - %s - %S",ID,serviceType,createdDate,state);
+      //  return  String.format("%S : %s - %s - %S",ID,serviceType,createdDate,state);
+        return "Service with ID:'" + ID +
+                "', created on '" + createdDate +
+                "', with state: "+state+(serviceType.getSimCard()?" Has SimCard, ":"")
+                +(serviceType.getVoice()?" Has Voice, ":"")+(serviceType.getSMS()?" Has SMS, ":"")+
+                (serviceType.getData()?" Has Data, ":"");
     }
 
     @Override
@@ -60,5 +67,6 @@ public class Service {
     public int hashCode() {
         return Objects.hash(ID);
     }
+
 
 }

@@ -1,11 +1,11 @@
 public interface ServiceType {
-    void SimCard();
-    void Voice();
-    default void SMS(){
-
+    boolean getSimCard();
+    boolean getVoice();
+    default boolean getSMS(){
+        return false;
     }
-    default void Data(){
-
+    default boolean getData(){
+        return false;
     }
 }
 
