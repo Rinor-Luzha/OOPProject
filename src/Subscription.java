@@ -1,5 +1,5 @@
 import java.time.LocalDate;
-import java.util.Date;
+import java.util.List;
 
 public abstract class Subscription implements ServiceType{
 
@@ -8,6 +8,7 @@ public abstract class Subscription implements ServiceType{
     private LocalDate createdDate;
     private State state;
 
+    List<Service> services;
 
     public Subscription(String phoneNumber, LocalDate createdDate, State state) throws SubscriptionException{
         this.idNumber = GenerateId.Subscription.getId();
@@ -33,6 +34,16 @@ public abstract class Subscription implements ServiceType{
 
     public State getState() {
         return state;
+    }
+
+    @Override
+    public boolean getSimCard() {
+        return true;
+    }
+
+    @Override
+    public boolean getVoice() {
+        return true;
     }
 
     public boolean equals(Object o){

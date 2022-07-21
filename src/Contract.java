@@ -60,6 +60,4 @@ public class Contract {
         }
         return sb.toString();
     }
-
-
 }
