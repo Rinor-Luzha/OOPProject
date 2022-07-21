@@ -54,7 +54,7 @@ public class Contract {
     public String toString() {
         StringBuilder sb = new StringBuilder(idNumber + " of type: " + contractType +
                 ", was created on " + createdDate + ", with " + state +
-                " state, has the following subscriptions: ");
+                " state, has the following subscriptions:\n");
         for(Subscription s:subscriptions) {
             sb.append("\t").append(s);
         }

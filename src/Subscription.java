@@ -2,14 +2,14 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Subscription implements ServiceType{
+public class Subscription {
 
     private String idNumber;
     private String phoneNumber;
     private LocalDate createdDate;
     private State state;
 
-    List<Service> services;
+    private List<Service> services;
 
 
     public Subscription(String phoneNumber, LocalDate createdDate, State state) throws SubscriptionException{
@@ -39,22 +39,14 @@ public abstract class Subscription implements ServiceType{
         return state;
     }
 
-    @Override
-    public boolean getSimCard() {
-        return true;
-    }
-
-    @Override
-    public boolean getVoice() {
-        return true;
-    }
-
 
     public List<Service> getServices() {
         return services;
     }
 
     public boolean addService(Service s){
+        //Mos lejo me i shtu dy service te tnjejtit lloj
+        //p.sh dy Data ose dy SMS.
         if(!services.contains(s)){
             services.add(s);
             return true;
@@ -72,10 +64,12 @@ public abstract class Subscription implements ServiceType{
 
     @Override
     public String toString() {
-        return idNumber+" with phone number '" + phoneNumber +
+        StringBuilder sb=new StringBuilder(idNumber+" with phone number '" + phoneNumber +
                 "', created on '" + createdDate +
-                "', with state: "+state+"\n\t"+(getSimCard()?" Has SimCard\n\t":"")
-                +(getVoice()?" Has Voice\n\t":"")+(getSMS()?" Has SMS\n\t":"")+
-                (getData()?" Has Data\n\t":"");
+                "', with state: "+state+", has the following services: \n\t");
+        for(Service s:services) {
+            sb.append("\t").append(s);
+        }
+        return sb.toString();
     }
 }

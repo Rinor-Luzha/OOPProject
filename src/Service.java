@@ -18,7 +18,7 @@ public class Service {
     private LocalDate createdDate;
     private State state;
 
-    public Service( ServiceType serviceType,LocalDate createdDate, State state) {
+    public Service(ServiceType serviceType,LocalDate createdDate, State state) {
         ID=GenerateId.Service.getId();
         this.serviceType=serviceType;
         this.createdDate = createdDate;
@@ -28,7 +28,6 @@ public class Service {
     public String getID() {
         return ID;
     }
-
 
     public LocalDate getCreatedDate() {
         return createdDate;
@@ -56,8 +55,7 @@ public class Service {
 
     @Override
     public boolean equals(Object o) {
-        if (o instanceof Service){
-            Service s=(Service)o;
+        if (o instanceof Service s){
             return s.getID().equals(ID);
         }
         return false;
