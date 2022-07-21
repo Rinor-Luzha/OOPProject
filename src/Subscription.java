@@ -12,7 +12,7 @@ public abstract class Subscription implements ServiceType{
     List<Service> services;
 
 
-    public Subscription(String phoneNumber, LocalDate createdDate, State state, List<Service> services) throws SubscriptionException{
+    public Subscription(String phoneNumber, LocalDate createdDate, State state) throws SubscriptionException{
         this.idNumber = GenerateId.Subscription.getId();
         if(!phoneNumber.matches("(\\+3834)(4|5|6)(\\d{5})")){
             throw new SubscriptionException("Phone number is not correct!");
@@ -47,6 +47,11 @@ public abstract class Subscription implements ServiceType{
     @Override
     public boolean getVoice() {
         return true;
+    }
+
+
+    public List<Service> getServices() {
+        return services;
     }
 
     public boolean equals(Object o){

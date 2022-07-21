@@ -12,7 +12,7 @@ public class Customer {
         idNumber=GenerateId.Customer.getId();
         this.customerType=customerType;
         this.state=state;
-        contracts=new ArrayList<Contract>();//data structure can be changed with any other type of list
+        contracts=new ArrayList<Contract>();          //data structure can be changed with any other type of list
     }
 
     public String getIdNumber() {
