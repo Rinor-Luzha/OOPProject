@@ -1,4 +1,5 @@
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Subscription implements ServiceType{
@@ -10,7 +11,8 @@ public abstract class Subscription implements ServiceType{
 
     List<Service> services;
 
-    public Subscription(String phoneNumber, LocalDate createdDate, State state) throws SubscriptionException{
+
+    public Subscription(String phoneNumber, LocalDate createdDate, State state, List<Service> services) throws SubscriptionException{
         this.idNumber = GenerateId.Subscription.getId();
         if(!phoneNumber.matches("(\\+3834)(4|5|6)(\\d{5})")){
             throw new SubscriptionException("Phone number is not correct!");
@@ -18,6 +20,7 @@ public abstract class Subscription implements ServiceType{
         this.phoneNumber = phoneNumber;
         this.createdDate = createdDate;
         this.state = state;
+        services = new ArrayList<Service>();
     }
 
     public String getId() {
