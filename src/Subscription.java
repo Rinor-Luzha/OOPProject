@@ -1,30 +1,33 @@
+import java.time.LocalDate;
 import java.util.Date;
 
-public class Subscription {
+public abstract class Subscription implements ServiceType{
 
-    private long id;
+    private String idNumber;
     private String phoneNumber;
-    private Date createdDate;
+    private LocalDate createdDate;
     private State state;
 
 
-    public Subscription(long id, String phoneNumber, Date createdDate, State state) {
-        this.id = id;
-        //TODO: Conditons for phone number
+    public Subscription(String phoneNumber, LocalDate createdDate, State state) throws SubscriptionException{
+        this.idNumber = GenerateId.Subscription.getId();
+        if(!phoneNumber.matches("(\\+3834)(4|5|6)(\\d{5})")){
+            throw new SubscriptionException("Phone number is not correct!");
+        }
         this.phoneNumber = phoneNumber;
         this.createdDate = createdDate;
         this.state = state;
     }
 
-    public long getId() {
-        return id;
+    public String getId() {
+        return idNumber;
     }
 
     public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public Date getCreatedDate() {
+    public LocalDate getCreatedDate() {
         return createdDate;
     }
 
@@ -36,11 +39,10 @@ public class Subscription {
 
     @Override
     public String toString() {
-        return "Subscription{" +
-                "id=" + id +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", createdDate=" + createdDate +
-                ", state=" + state +
-                '}';
+        return idNumber+" with phone number '" + phoneNumber +
+                "', created on '" + createdDate +
+                "', with state: "+state+"\n\t"+(getSimCard()?" Has SimCard\n\t":"")
+                +(getVoice()?" Has Voice\n\t":"")+(getSMS()?" Has SMS\n\t":"")+
+                (getData()?" Has Data\n\t":"");
     }
 }
