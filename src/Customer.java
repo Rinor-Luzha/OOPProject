@@ -40,7 +40,8 @@ public class Customer {
     }
 
     public boolean equals(Object o){
-        if(o instanceof Customer c){
+        if(o instanceof Customer ){
+            Customer c=(Customer) o;
             return c.idNumber.equals(idNumber);
         }
         return false;
