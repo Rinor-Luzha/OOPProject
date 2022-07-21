@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
-/*
+
 public class Customer {
     private static long counter=1; //unique for every instance
     private long idNumber;
@@ -49,4 +49,4 @@ public class Customer {
         }
         return sb.toString();
     }
-}*/
+}
