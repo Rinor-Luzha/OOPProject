@@ -35,6 +35,12 @@ public abstract class Subscription implements ServiceType{
         return state;
     }
 
+    public boolean equals(Object o){
+        if(o instanceof Subscription s){
+            return s.idNumber.equals(idNumber);
+        }
+        return false;
+    }
 
 
     @Override

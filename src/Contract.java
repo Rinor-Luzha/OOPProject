@@ -3,19 +3,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Contract {
-    enum ContractType {PREAPID, POSTPAID}
-
-    ;
+    enum ContractType {PREPAID, POSTPAID};
     private String idNumber;
     private LocalDate createdDate;
     private State state;
     private ContractType contractType;
-    List<Subscription> subscriptions;
+    private List<Subscription> subscriptions;
 
 
-    public Contract(ContractType contractType, State state) {
+    public Contract(ContractType contractType,LocalDate createdDate,State state) {
         idNumber = GenerateId.Contract.getId();
         this.contractType = contractType;
+        this.createdDate=createdDate;
         this.state = state;
         subscriptions = new ArrayList<Subscription>();
     }
@@ -46,7 +45,7 @@ public class Contract {
 
     public boolean equals(Object o){
         if(o instanceof Contract c){
-            return c.idNumber==idNumber;
+            return c.idNumber.equals(idNumber);
         }
         return false;
     }
@@ -55,7 +54,7 @@ public class Contract {
     public String toString() {
         StringBuilder sb = new StringBuilder(idNumber + " of type: " + contractType +
                 ", was created on " + createdDate + ", with " + state +
-                " state, has the following subsciptions: ");
+                " state, has the following subscriptions: ");
         for(Subscription s:subscriptions) {
             sb.append("\t").append(s);
         }

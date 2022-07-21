@@ -41,7 +41,7 @@ public class Customer {
 
     public boolean equals(Object o){
         if(o instanceof Customer c){
-            return c.idNumber==idNumber;
+            return c.idNumber.equals(idNumber);
         }
         return false;
     }
