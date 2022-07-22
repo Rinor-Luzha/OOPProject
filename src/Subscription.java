@@ -13,7 +13,6 @@ public class Subscription {
     private List<Service> services = new ArrayList<>();
 
 
-
     public Subscription(String phoneNumber, LocalDate createdDate, State state) throws SubscriptionException{
         this.idNumber = GenerateId.Subscription.getId();
         if(!phoneNumber.matches("(\\+3834)(4|5|6)(\\d{5})")){
@@ -27,7 +26,7 @@ public class Subscription {
 
     }
 
-    public String getId() {
+    public String getIdNumber() {
         return idNumber;
     }
 
@@ -44,9 +43,7 @@ public class Subscription {
     }
 
 
-    public List<Service> getServices() {
-        return services;
-    }
+
 
     public boolean addService(Service s){
         for (Service s1 : services) {
@@ -59,6 +56,17 @@ public class Subscription {
             return true;
         }
         return false;
+    }
+
+    public String getServices() {
+        if (services.size() == 0) {
+            return null;
+        }
+        StringBuilder sb = new StringBuilder("{");
+        for (Service s : services) {
+            sb.append(s.getIdNumber()).append(",");
+        }
+        return  sb.substring(0,sb.length()-1)+"}";
     }
 
     public boolean equals(Object o){
