@@ -1,3 +1,3 @@
-public class Data implements ServiceType{
+public class Data extends Service implements ServiceType{
 
 }

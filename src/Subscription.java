@@ -9,7 +9,8 @@ public class Subscription {
     private LocalDate createdDate;
     private State state;
 
-    private List<Service> services;
+    private List<Service> services = new ArrayList<>();
+
 
 
     public Subscription(String phoneNumber, LocalDate createdDate, State state) throws SubscriptionException{
@@ -20,7 +21,10 @@ public class Subscription {
         this.phoneNumber = phoneNumber;
         this.createdDate = createdDate;
         this.state = state;
-        services = new ArrayList<Service>();
+        SMS sms;
+        Data data;
+        services.add(sms);
+        services.add(data);
     }
 
     public String getId() {
@@ -47,7 +51,13 @@ public class Subscription {
     public boolean addService(Service s){
         //Mos lejo me i shtu dy service te tnjejtit lloj
         //p.sh dy Data ose dy SMS.
-        if(!services.contains(s)){
+
+
+        for (Service s1 : services) {
+            if (s1.getClass() == s.getClass())
+            return false;
+        }
+        if(!services.contains(s)) {
             services.add(s);
             return true;
         }
