@@ -1,3 +1,5 @@
+
+
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -18,9 +20,13 @@ public class Service {
     private LocalDate createdDate;
     private State state;
 
-    public Service(ServiceType serviceType,LocalDate createdDate, State state) {
+    public Service(ServiceType serviceType,LocalDate createdDate, State state) throws ServiceException {
         ID=GenerateId.Service.getId();
+        if(!(serviceType instanceof ServiceType)){
+            throw new ServiceException(serviceType+ " nuk eshte ServiceType!");
+        }
         this.serviceType=serviceType;
+
         this.createdDate = createdDate;
         this.state = state;
     }
