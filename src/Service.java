@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public class Service {
-    private String ID;
+    private String idNumber;
     private ServiceType serviceType;
     /*private ServiceType serviceType=new ServiceType() {
         @Override
@@ -21,7 +21,7 @@ public class Service {
     private State state;
 
     public Service(ServiceType serviceType,LocalDate createdDate, State state){
-        ID=GenerateId.Service.getId();
+        idNumber=GenerateId.Service.getId();
         this.serviceType=serviceType;
 
         this.createdDate = createdDate;
@@ -32,8 +32,8 @@ public class Service {
         return serviceType;
     }
 
-    public String getID() {
-        return ID;
+    public String getIdNumber() {
+        return idNumber;
     }
 
     public LocalDate getCreatedDate() {
@@ -57,20 +57,20 @@ public class Service {
       //  return  String.format("%S : %s - %s - %S",ID,serviceType,createdDate,state);
 
         return String.format("Service with ID:'%S', type:%s created on '%s' " +
-                "and with state %s",ID,serviceType.getClass().getSimpleName(),createdDate,state);
+                "and with state %s",idNumber,serviceType.getClass().getSimpleName(),createdDate,state);
     }
 
     @Override
     public boolean equals(Object o) {
         if (o instanceof Service s){
-            return s.getID().equals(ID);
+            return s.getIdNumber().equals(idNumber);
         }
         return false;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(ID);
+        return Objects.hash(idNumber);
     }
 
 

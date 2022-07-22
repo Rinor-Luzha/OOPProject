@@ -9,7 +9,6 @@ public class Customer {
     private LocalDate createdDate;
     private State state;
     private List<Contract> contracts;
-
     public Customer(CustomerType customerType,LocalDate createdDate,State state){
         idNumber=GenerateId.Customer.getId();
         this.customerType=customerType;
@@ -34,9 +33,6 @@ public class Customer {
         return state;
     }
 
-    public List<Contract> getContracts() {
-        return contracts;
-    }
 
     public boolean writeContract(Contract c){
         if(!contracts.contains(c)){
@@ -44,6 +40,19 @@ public class Customer {
             return true;
         }
         return false;
+    }
+
+    public String getContracts() {
+        if (contracts.size()==0){
+            return null;
+        }
+        StringBuilder sb=new StringBuilder("{");
+        for (Contract c:contracts) {
+            sb.append(c.getIdNumber()).append(",");
+        }
+
+
+        return  sb.substring(0,sb.length()-1)+"}";
     }
 
     public boolean equals(Object o){

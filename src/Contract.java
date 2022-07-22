@@ -10,8 +10,18 @@ public class Contract {
     private ContractType contractType;
     private List<Subscription> subscriptions;
 
+    public String getSubscriptions() {
 
-    public Contract(ContractType contractType,LocalDate createdDate,State state) {
+            StringBuilder sb=new StringBuilder("{");
+                for (Subscription s:subscriptions) {
+                    sb.append(s.getIdNumber()).append(",");
+                }
+
+
+        return  sb.substring(0,sb.length()-1)+"}";
+    }
+
+    public Contract(ContractType contractType, LocalDate createdDate, State state) {
         idNumber = GenerateId.Contract.getId();
         this.contractType = contractType;
         this.createdDate=createdDate;
