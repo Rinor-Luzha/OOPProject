@@ -16,17 +16,6 @@ public class Main {
         c1.writeContract(c);
         System.out.println(c1);
 
-        System.out.println(c2);
-
-        Contact co1=new Contact(c1,"abc","abc",'M',LocalDate.now(),LocalDate.now(),State.ACTIVE);
-        Contact co2=new Contact(c,LocalDate.now(),State.ACTIVE);
-        Contact co3=new Contact(s,LocalDate.now(),State.ACTIVE);
-        Contact co4=new Contact(c2,"sda", LocalDate.now(),State.ACTIVE);
-
-        System.out.println(co1);
-        System.out.println(co2);
-        System.out.println(co3);
-        System.out.println(co4);
 
 
     }
