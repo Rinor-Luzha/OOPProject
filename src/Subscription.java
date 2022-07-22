@@ -49,11 +49,8 @@ public class Subscription {
     }
 
     public boolean addService(Service s){
-        //Mos lejo me i shtu dy service te tnjejtit lloj
-        //p.sh dy Data ose dy SMS.
         for (Service s1 : services) {
             if (s1.getServiceType().getClass().equals(s.getServiceType().getClass())) {
-                System.out.println("Slejohet kjo "+s);
                 return false;
             }
         }
