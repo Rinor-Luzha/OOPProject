@@ -36,7 +36,7 @@ public class TelecomServiceImplementation<E> implements TelecomService<E>{
 
                 fw = new FileWriter(output + list.get(0).getClass().getSimpleName() + ".txt");
                 for (Subscription s:subscriptions){
-                    fw.write(String.format("%S,%S,%s,%S,%s\n", s.getIdNumber(),s.getPhoneNumber(),s.getCreatedDate(),s.getState(),s.getServices()));
+                    fw.write(String.format("%S,%S,%s,%S,%s,%s\n", s.getIdNumber(),s.getPhoneNumber(),s.getCreatedDate(),s.getState(),s.getServices(),s.getProducts()));
                     fw.flush();
                 }
             }

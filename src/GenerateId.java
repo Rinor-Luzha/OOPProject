@@ -3,7 +3,8 @@ public enum GenerateId {
     Subscription("SUBS"),
     Contract("CONTRACT"),
     Contact("CONTACT"),
-    Customer ("CUST");
+    Customer ("CUST"),
+    Product ("PROD");
 
 
     private String prefix;

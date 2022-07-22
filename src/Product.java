@@ -4,6 +4,7 @@ import java.util.List;
 
 public class Product {
 
+    private String idNumber;
     private String name;
     private double price;
     private List<ServiceType> serviceTypes;
@@ -21,6 +22,7 @@ public class Product {
         if (fromDateTime.isAfter(toDateTime)) {
             throw new ProductException("Afati i dhene eshte i skaduar per produktin!");
         }
+        this.idNumber=GenerateId.Product.getId();
         this.name = name;
         this.price = price;
         this.serviceTypes = new ArrayList<>();
@@ -28,17 +30,8 @@ public class Product {
         this.toDateTime = toDateTime;
     }
 
-    public boolean addServiceType(ServiceType s){
-        for (ServiceType s1 : serviceTypes) {
-            if (s1.getClass().equals(s.getClass())) {
-                return false;
-            }
-        }
-        if(!serviceTypes.contains(s)) {
-            serviceTypes.add(s);
-            return true;
-        }
-        return false;
+    public String getIdNumber() {
+        return idNumber;
     }
 
     public String getName() {
@@ -60,20 +53,22 @@ public class Product {
     public LocalDate getToDateTime() {
         return toDateTime;
     }
-
-    private boolean compareServiceTypeLists(List<ServiceType> s){
-        for(ServiceType s1:s){
-            if(!serviceTypes.contains(s1)){
+    public boolean addServiceType(ServiceType s){
+        for (ServiceType s1 : serviceTypes) {
+            if (s1.getClass().equals(s.getClass())) {
                 return false;
             }
         }
-        return true;
+        if(!serviceTypes.contains(s)) {
+            serviceTypes.add(s);
+            return true;
+        }
+        return false;
     }
 
     public boolean equals(Object o){
         if(o instanceof Product p){
-            return p.name.equals(name) && p.price==price
-                    && compareServiceTypeLists(p.serviceTypes);
+            return p.idNumber.equals(idNumber);
         }
         return false;
     }

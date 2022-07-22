@@ -1,4 +1,3 @@
-import javax.xml.crypto.Data;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,8 +9,8 @@ public class Subscription {
     private LocalDate createdDate;
     private State state;
 
-    private List<Service> services = new ArrayList<>();
-
+    private List<Service> services;
+    private List<Product> products;
 
     public Subscription(String phoneNumber, LocalDate createdDate, State state) throws SubscriptionException{
         this.idNumber = GenerateId.Subscription.getId();
@@ -21,9 +20,12 @@ public class Subscription {
         this.phoneNumber = phoneNumber;
         this.createdDate = createdDate;
         this.state = state;
+
+        this.services=new ArrayList<>();
+        this.products=new ArrayList<>();
+
         services.add(new Service(new SMS(),LocalDate.now(),State.ACTIVE));
         services.add(new Service(new Voice(),LocalDate.now(),State.ACTIVE));
-
     }
 
     public String getIdNumber() {
@@ -43,8 +45,6 @@ public class Subscription {
     }
 
 
-
-
     public boolean addService(Service s){
         for (Service s1 : services) {
             if (s1.getServiceType().getClass().equals(s.getServiceType().getClass())) {
@@ -58,6 +58,17 @@ public class Subscription {
         return false;
     }
 
+    public String getProducts() {
+        if (products.size() == 0) {
+            return null;
+        }
+        StringBuilder sb = new StringBuilder("{");
+        for (Product p : products) {
+            sb.append(p.getIdNumber()).append(",");
+        }
+        return  sb.substring(0,sb.length()-1)+"}";
+    }
+
     public String getServices() {
         if (services.size() == 0) {
             return null;
@@ -67,6 +78,27 @@ public class Subscription {
             sb.append(s.getIdNumber()).append(",");
         }
         return  sb.substring(0,sb.length()-1)+"}";
+    }
+
+    public boolean purchaseProduct(Product p){
+        if(!LocalDate.now().isAfter(p.getFromDateTime()))
+            return false;
+        if(!LocalDate.now().isBefore(p.getToDateTime()))
+            return false;
+        for(ServiceType s:p.getServiceTypes()){
+            boolean hasServiceType=false;
+            for(Service s1:services){
+                if(s1.getServiceType().getClass().equals(s.getClass())) {
+                    hasServiceType = true;
+                    break;
+                }
+            }
+            if(!hasServiceType){
+                return false;
+            }
+        }
+        products.add(p);
+        return true;
     }
 
     public boolean equals(Object o){
@@ -84,6 +116,11 @@ public class Subscription {
                 "', with state: "+state+", has the following services: \n");
         for(Service s:services) {
             sb.append("\t").append(s);
+            sb.append("\n");
+        }
+        sb.append("And the following products:\n");
+        for(Product p:products) {
+            sb.append("\t").append(p);
             sb.append("\n");
         }
         return sb.toString();

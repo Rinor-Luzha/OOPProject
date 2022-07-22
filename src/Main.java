@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Main {
 
 
-    public static void main(String[] args) throws SubscriptionException, ContactException, IOException {
+    public static void main(String[] args) throws SubscriptionException, ContactException, IOException, ProductException {
         Subscription s=new Subscription("+3834512342",LocalDate.now(),State.ACTIVE);
         Subscription s1=new Subscription("+3834512342",LocalDate.now(),State.ACTIVE);
 
@@ -16,9 +16,11 @@ public class Main {
 
         Contract co=new Contract(Contract.ContractType.POSTPAID,LocalDate.MAX,State.INACTIVE);
 
+        Product p1=new Product("voice",24.2,LocalDate.parse("2021-12-03"),LocalDate.parse("2022-12-03"));
+        p1.addServiceType(new Voice());
 
 
-
+        s.purchaseProduct(p1);
 
         co.writeSubscription(s);
         co.writeSubscription(s1);
@@ -43,13 +45,16 @@ public class Main {
         subscriptions.add(s1);
 
 
+
+
         TelecomServiceImplementation t1=new TelecomServiceImplementation();
 
 
-        t1.create(customers,"C:\\Users\\Lenovo\\Desktop\\OOPProject\\out\\production\\OOPProject\\");
+        t1.create(customers,"C:\\Users\\rinor\\OneDrive\\Desktop\\");
 
-        t1.create(contracts,"C:\\Users\\Lenovo\\Desktop\\OOPProject\\out\\production\\OOPProject\\");
-        t1.create(subscriptions,"C:\\Users\\Lenovo\\Desktop\\OOPProject\\out\\production\\OOPProject\\");
+        t1.create(contracts,"C:\\Users\\rinor\\OneDrive\\Desktop\\");
+        t1.create(subscriptions,"C:\\Users\\rinor\\OneDrive\\Desktop\\");
+
 
 
     }
