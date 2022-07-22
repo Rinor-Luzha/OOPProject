@@ -57,6 +57,7 @@ public class Contract {
                 " state, has the following subscriptions:\n");
         for(Subscription s:subscriptions) {
             sb.append("\t").append(s);
+            sb.append("\n");
         }
         return sb.toString();
     }

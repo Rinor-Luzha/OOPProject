@@ -60,6 +60,7 @@ public class Customer {
                 " state, has the following contracts:\n");
         for(Contract c:contracts){
             sb.append("\t").append(c);
+            sb.append("\n");
         }
         return sb.toString();
     }

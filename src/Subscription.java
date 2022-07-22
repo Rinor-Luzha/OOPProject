@@ -1,3 +1,4 @@
+import javax.xml.crypto.Data;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,10 +22,9 @@ public class Subscription {
         this.phoneNumber = phoneNumber;
         this.createdDate = createdDate;
         this.state = state;
-        SMS sms;
-        Data data;
-        services.add(sms);
-        services.add(data);
+        services.add(new Service(new SMS(),LocalDate.now(),State.ACTIVE));
+        services.add(new Service(new Voice(),LocalDate.now(),State.ACTIVE));
+
     }
 
     public String getId() {
@@ -51,11 +51,11 @@ public class Subscription {
     public boolean addService(Service s){
         //Mos lejo me i shtu dy service te tnjejtit lloj
         //p.sh dy Data ose dy SMS.
-
-
         for (Service s1 : services) {
-            if (s1.getClass() == s.getClass())
-            return false;
+            if (s1.getServiceType().getClass().equals(s.getServiceType().getClass())) {
+                System.out.println("Slejohet kjo "+s);
+                return false;
+            }
         }
         if(!services.contains(s)) {
             services.add(s);
@@ -76,9 +76,10 @@ public class Subscription {
     public String toString() {
         StringBuilder sb=new StringBuilder(idNumber+" with phone number '" + phoneNumber +
                 "', created on '" + createdDate +
-                "', with state: "+state+", has the following services: \n\t");
+                "', with state: "+state+", has the following services: \n");
         for(Service s:services) {
             sb.append("\t").append(s);
+            sb.append("\n");
         }
         return sb.toString();
     }

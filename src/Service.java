@@ -20,15 +20,16 @@ public class Service {
     private LocalDate createdDate;
     private State state;
 
-    public Service(ServiceType serviceType,LocalDate createdDate, State state) throws ServiceException {
+    public Service(ServiceType serviceType,LocalDate createdDate, State state){
         ID=GenerateId.Service.getId();
-        if(!(serviceType instanceof ServiceType)){
-            throw new ServiceException(serviceType+ " nuk eshte ServiceType!");
-        }
         this.serviceType=serviceType;
 
         this.createdDate = createdDate;
         this.state = state;
+    }
+
+    public ServiceType getServiceType() {
+        return serviceType;
     }
 
     public String getID() {
@@ -56,7 +57,7 @@ public class Service {
       //  return  String.format("%S : %s - %s - %S",ID,serviceType,createdDate,state);
 
         return String.format("Service with ID:'%S', type:%s created on '%s' " +
-                "and with state %s",ID,serviceType,createdDate,state);
+                "and with state %s",ID,serviceType.getClass().getSimpleName(),createdDate,state);
     }
 
     @Override
