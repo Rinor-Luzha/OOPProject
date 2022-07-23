@@ -47,8 +47,33 @@ public class TelecomServiceImplementation<E> implements TelecomService<E>{
     }
 
     @Override
-    public ArrayList<E> delete(String idNumber) {
-        return null;
+    public void delete(String idNumber) throws IOException{
+        String sub=idNumber.substring(0,4);
+        String filePath=null;
+        switch (sub){
+            case "CUST":
+                filePath="Customer.txt";
+                break;
+
+            case "SUBS":
+                filePath="Subscription.txt";
+                break;
+            case "CONT":
+                filePath="Contract.txt";
+                break;
+            default:
+                //throw exception id gabim anajsen
+        }
+        File file=new File(path+filePath);
+        List<String> records= Files.readAllLines(file.toPath()).stream()
+                .filter(row->!row.startsWith(idNumber))
+                .collect(Collectors.toList());
+
+        try (FileWriter fw=new FileWriter(file)){
+            for (String record : records) {
+                fw.write(record+"\n");
+            }
+        }
     }
 
     @Override
