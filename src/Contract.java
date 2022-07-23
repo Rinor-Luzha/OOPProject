@@ -14,7 +14,7 @@ public class Contract {
 
             StringBuilder sb=new StringBuilder("{");
                 for (Subscription s:subscriptions) {
-                    sb.append(s.getIdNumber()).append(",");
+                    sb.append(s.getIdNumber()).append(";");
                 }
 
 
@@ -27,6 +27,18 @@ public class Contract {
         this.createdDate=createdDate;
         this.state = state;
         subscriptions = new ArrayList<Subscription>();
+    }
+
+    private Contract(String idNumber, LocalDate createdDate, State state, ContractType contractType, List<Subscription> subscriptions) {
+        this.idNumber = idNumber;
+        this.createdDate = createdDate;
+        this.state = state;
+        this.contractType = contractType;
+        this.subscriptions = subscriptions;
+    }
+
+    public static Contract queryContractFile(String idNumber, LocalDate createdDate, State state, ContractType contractType, List<Subscription> subscriptions){
+        return new Contract(idNumber, createdDate, state, contractType, subscriptions);
     }
 
     public String getIdNumber() {

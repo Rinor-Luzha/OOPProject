@@ -17,6 +17,18 @@ public class Customer {
         contracts=new ArrayList<Contract>();//data structure can be changed with any other type of list
     }
 
+    private Customer(String idNumber, CustomerType customerType, LocalDate createdDate, State state, List<Contract> contracts) {
+        this.idNumber = idNumber;
+        this.customerType = customerType;
+        this.createdDate = createdDate;
+        this.state = state;
+        this.contracts = contracts;
+    }
+    public static Customer queryCustomerFile(String idNumber, CustomerType customerType, LocalDate createdDate, State state, List<Contract> contracts){
+        return new Customer(idNumber, customerType, createdDate, state, contracts);
+    }
+
+
     public String getIdNumber() {
         return idNumber;
     }
@@ -48,7 +60,7 @@ public class Customer {
         }
         StringBuilder sb=new StringBuilder("{");
         for (Contract c:contracts) {
-            sb.append(c.getIdNumber()).append(",");
+            sb.append(c.getIdNumber()).append(";");
         }
 
 

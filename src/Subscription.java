@@ -28,6 +28,22 @@ public class Subscription {
         services.add(new Service(new Voice(),LocalDate.now(),State.ACTIVE));
     }
 
+    private Subscription(String idNumber, String phoneNumber, LocalDate createdDate, State state, List<Service> services, List<Product> products) {
+        this.idNumber = idNumber;
+        this.phoneNumber = phoneNumber;
+        this.createdDate = createdDate;
+        this.state = state;
+        this.services = services;
+        this.products = products;
+    }
+    public static Subscription querySubscriptionFile(String idNumber, String phoneNumber, LocalDate createdDate, State state){
+        List<Service> services=new ArrayList<>();
+        services.add(new Service(new SMS(),LocalDate.now(),State.ACTIVE));
+        services.add(new Service(new Voice(),LocalDate.now(),State.ACTIVE));
+        return new Subscription(idNumber,phoneNumber,createdDate,state,services,new ArrayList<>());
+
+    }
+
     public String getIdNumber() {
         return idNumber;
     }
@@ -64,7 +80,7 @@ public class Subscription {
         }
         StringBuilder sb = new StringBuilder("{");
         for (Product p : products) {
-            sb.append(p.getIdNumber()).append(",");
+            sb.append(p.getIdNumber()).append(";");
         }
         return  sb.substring(0,sb.length()-1)+"}";
     }
@@ -75,7 +91,7 @@ public class Subscription {
         }
         StringBuilder sb = new StringBuilder("{");
         for (Service s : services) {
-            sb.append(s.getIdNumber()).append(",");
+            sb.append(s.getIdNumber()).append(";");
         }
         return  sb.substring(0,sb.length()-1)+"}";
     }

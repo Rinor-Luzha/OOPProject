@@ -30,6 +30,17 @@ public class Product {
         this.toDateTime = toDateTime;
     }
 
+    private Product(String idNumber, String name, double price, LocalDate fromDateTime, LocalDate toDateTime) {
+        this.idNumber = idNumber;
+        this.name = name;
+        this.price = price;
+        this.fromDateTime = fromDateTime;
+        this.toDateTime = toDateTime;
+    }
+    public static Product queryFileProduct(String idNumber, String name, double price, LocalDate fromDateTime, LocalDate toDateTime){
+        return new Product(idNumber,name,price,fromDateTime,toDateTime);
+    }
+
     public String getIdNumber() {
         return idNumber;
     }
