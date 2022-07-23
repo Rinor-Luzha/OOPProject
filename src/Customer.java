@@ -1,15 +1,20 @@
+import exceptions.CustomerException;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Customer {
     private String idNumber;
-    enum CustomerType{INDIVIDUAL,BUSINESS};
+    public enum CustomerType{INDIVIDUAL,BUSINESS};
     private CustomerType customerType;
     private LocalDate createdDate;
     private State state;
     private List<Contract> contracts;
-    public Customer(CustomerType customerType,LocalDate createdDate,State state){
+    public Customer(CustomerType customerType,LocalDate createdDate,State state) throws CustomerException {
+        if(createdDate.isAfter(LocalDate.now())){
+            throw new CustomerException("Data e krijimit per konsumatorin eshte dhene gabimisht!");
+        }
         idNumber=GenerateId.Customer.getId();
         this.customerType=customerType;
         this.createdDate=createdDate;
@@ -44,6 +49,11 @@ public class Customer {
     public State getState() {
         return state;
     }
+
+    public void setState(State state) {
+        this.state = state;
+    }
+
 
 
     public boolean writeContract(Contract c){

@@ -1,3 +1,6 @@
+import exceptions.ServiceException;
+import exceptions.SubscriptionException;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,12 +15,15 @@ public class Subscription {
     private List<Service> services;
     private List<Product> products;
 
-    public Subscription(String phoneNumber, LocalDate createdDate, State state) throws SubscriptionException{
+    public Subscription(String phoneNumber, LocalDate createdDate, State state) throws SubscriptionException, ServiceException {
         this.idNumber = GenerateId.Subscription.getId();
         if(!phoneNumber.matches("(\\+3834)(4|5|6)(\\d{5})")){
             throw new SubscriptionException("Phone number is not correct!");
         }
         this.phoneNumber = phoneNumber;
+        if(createdDate.isAfter(LocalDate.now())){
+            throw new SubscriptionException("Data e krijimit per subscription eshte dhene gabimisht!");
+        }
         this.createdDate = createdDate;
         this.state = state;
 
@@ -36,7 +42,7 @@ public class Subscription {
         this.services = services;
         this.products = products;
     }
-    public static Subscription querySubscriptionFile(String idNumber, String phoneNumber, LocalDate createdDate, State state){
+    public static Subscription querySubscriptionFile(String idNumber, String phoneNumber, LocalDate createdDate, State state) throws ServiceException {
         List<Service> services=new ArrayList<>();
         services.add(new Service(new SMS(),LocalDate.now(),State.ACTIVE));
         services.add(new Service(new Voice(),LocalDate.now(),State.ACTIVE));

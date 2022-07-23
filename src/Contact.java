@@ -1,8 +1,10 @@
+import exceptions.ContactException;
+
 import java.time.LocalDate;
 
 public class Contact {
     private String idNumber;
-    enum IdType {
+    public enum IdType {
         CU("Customer"),
         CO("Contract"),
         SU("Subscription");
@@ -37,6 +39,21 @@ public class Contact {
 
     public Contact (Customer c, String name, String lastName, char gender, LocalDate dateOfBirth, LocalDate createdDate, State state) throws ContactException {
         this(IdType.CU,name,lastName,null,gender,dateOfBirth,createdDate,state);
+        if(c==null){
+            throw new ContactException("Custumer i derguar per contact eshte null!");
+        }
+        if(StringUtils.nullOrEmpty(name)){
+            throw new ContactException("Emri per kontaktin eshte i zbrazte!");
+        }
+        if(StringUtils.nullOrEmpty(lastName)){
+            throw new ContactException("Emri per kontaktin eshte i zbrazte!");
+        }
+        if(dateOfBirth.isAfter(LocalDate.now())){
+            throw new ContactException("Data lindjes per kontaktin eshte dhene gabimisht!");
+        }
+        if(createdDate.isAfter(LocalDate.now())){
+            throw new ContactException("Data krijimit kontaktit eshte dhene gabimisht!");
+        }
         if(c.getCustomerType()!= Customer.CustomerType.INDIVIDUAL){
             throw new ContactException("Customer nuk eshte i tipit individual!");
         }
@@ -46,15 +63,36 @@ public class Contact {
     }
     public Contact(Customer c,String customerName,LocalDate createdDate,State state) throws ContactException {
         this(IdType.CU,null,null,customerName,'\u0000',null,createdDate,state);
+        if(c==null){
+            throw new ContactException("Custumer i derguar per contact eshte null!");
+        }
+        if(StringUtils.nullOrEmpty(customerName)){
+            throw new ContactException("Emri per kontaktin eshte i zbrazte!");
+        }
+        if(createdDate.isAfter(LocalDate.now())){
+            throw new ContactException("Data krijimit kontaktit eshte dhene gabimisht!");
+        }
         if(c.getCustomerType()!= Customer.CustomerType.BUSINESS){
             throw new ContactException("Customer nuk eshte i tipit business!");
         }
     }
-    public Contact(Subscription s,LocalDate createdDate,State state){
+    public Contact(Subscription s,LocalDate createdDate,State state) throws ContactException {
         this(IdType.SU,null,null,null,'\u0000',null,createdDate,state);
+        if(s==null){
+            throw new ContactException("Subscription i derguar per contact eshte null!");
+        }
+        if(createdDate.isAfter(LocalDate.now())){
+            throw new ContactException("Data krijimit kontaktit eshte dhene gabimisht!");
+        }
     }
-    public Contact(Contract c,LocalDate createdDate,State state){
+    public Contact(Contract c,LocalDate createdDate,State state) throws ContactException {
         this(IdType.CO,null,null,null,'\u0000',null,createdDate,state);
+        if(c==null){
+            throw new ContactException("Contract e derguar per contact eshte null!");
+        }
+        if(createdDate.isAfter(LocalDate.now())){
+            throw new ContactException("Data krijimit kontaktit eshte dhene gabimisht!");
+        }
     }
 
     public String getIdNumber() {

@@ -1,6 +1,8 @@
+import exceptions.ContactException;
+import exceptions.ProductException;
+import exceptions.SubscriptionException;
+
 import java.io.IOException;
-import java.time.LocalDate;
-import java.util.ArrayList;
 
 public class Main {
 
@@ -55,11 +57,11 @@ public class Main {
 //        t1.create(contracts);
 //        t1.create(subscriptions);
 
-        System.out.println(t1.findByID("CUST_1"));
-        t1.delete("CUST_1");
-        System.out.println(t1.findByID("CUST_1"));
-
-        System.out.println(t1.findAll("CusTomer"));
+//        System.out.println(t1.findByID("CUST_1"));
+//        t1.delete("CUST_1");
+//        System.out.println(t1.findByID("CUST_1"));
+//
+//        System.out.println(t1.findAll("CusTomer"));
 
 
     }

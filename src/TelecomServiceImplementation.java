@@ -1,10 +1,11 @@
+import exceptions.ServiceException;
+
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class TelecomServiceImplementation<E> implements TelecomService<E>{
@@ -42,8 +43,43 @@ public class TelecomServiceImplementation<E> implements TelecomService<E>{
     }
 
     @Override
-    public ArrayList<E> update(ArrayList<E> list,String idNumber) {
-        return null;
+    public ArrayList<E> update(ArrayList<E> list,String idNumber) throws IOException {
+        if(list.size()<1){
+            return list;
+        }
+        if (list.get(0) instanceof Customer) {
+            ArrayList<Customer> customers= (ArrayList<Customer>) list;
+            for(int i=0;i<customers.size();i++){
+                Customer c=customers.get(i);
+                if(c.getIdNumber().equals(idNumber)){
+                    Customer update=(Customer)findByID(idNumber);
+                    customers.set(i,update);
+                    return list;
+                }
+            }
+        }else if (list.get(0) instanceof Contract) {
+            ArrayList<Contract> contracts= (ArrayList<Contract>) list;
+            for(int i=0;i<contracts.size();i++){
+                Contract c=contracts.get(i);
+                if(c.getIdNumber().equals(idNumber)){
+                    Contract update=(Contract)findByID(idNumber);
+                    contracts.set(i,update);
+                    return list;
+                }
+            }
+
+        }else if(list.get(0) instanceof Subscription) {
+            ArrayList<Subscription> subscriptions= (ArrayList<Subscription>) list;
+            for(int i=0;i<subscriptions.size();i++){
+                Subscription c=subscriptions.get(i);
+                if(c.getIdNumber().equals(idNumber)){
+                    Subscription update=(Subscription)findByID(idNumber);
+                    subscriptions.set(i,update);
+                    return list;
+                }
+            }
+        }
+        return list;
     }
 
     @Override
@@ -115,7 +151,14 @@ public class TelecomServiceImplementation<E> implements TelecomService<E>{
                     .filter(array-> array.length==6)
                     .filter(array -> array[0].equals(idNumber))
                     .findFirst()
-                    .map(array -> toSubscription(array))
+                    .map(array -> {
+                        try {
+                            return toSubscription(array);
+                        } catch (ServiceException e) {
+                            e.printStackTrace();
+                        }
+                        return null;
+                    })
                     .orElse(null);
         }
 
@@ -155,7 +198,14 @@ public class TelecomServiceImplementation<E> implements TelecomService<E>{
             return (ArrayList<E>) Files.readAllLines(Path.of(path+"Subscription.txt")).stream()
                     .map(row -> row.split(","))
                     .filter(array-> array.length==6)
-                    .map(array -> toSubscription(array))
+                    .map(array -> {
+                        try {
+                            return toSubscription(array);
+                        } catch (ServiceException e) {
+                            e.printStackTrace();
+                        }
+                        return null;
+                    })
                     .collect(Collectors.toList());
         }
 
@@ -205,14 +255,21 @@ public class TelecomServiceImplementation<E> implements TelecomService<E>{
                     .filter(array-> array.length==6)
                     .filter(array -> array[0].equals(subId))
                     .findFirst()
-                    .map(array -> toSubscription(array))
+                    .map(array -> {
+                        try {
+                            return toSubscription(array);
+                        } catch (ServiceException e) {
+                            e.printStackTrace();
+                        }
+                        return null;
+                    })
                     .orElse(null);
             list.add(s);
         }
         return Contract.queryContractFile(idNumber,createdDate,state,contractType,list);
     }
 
-    private Subscription toSubscription(String[] tokens){
+    private Subscription toSubscription(String[] tokens) throws ServiceException {
         String idNumber=tokens[0];
         String phoneNumber=tokens[1];
         LocalDate createdDate=LocalDate.parse(tokens[2]);

@@ -1,29 +1,23 @@
+import exceptions.ContractException;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Contract {
-    enum ContractType {PREPAID, POSTPAID};
+    public enum ContractType {PREPAID, POSTPAID};
     private String idNumber;
     private LocalDate createdDate;
     private State state;
     private ContractType contractType;
     private List<Subscription> subscriptions;
 
-    public String getSubscriptions() {
-
-            StringBuilder sb=new StringBuilder("{");
-                for (Subscription s:subscriptions) {
-                    sb.append(s.getIdNumber()).append(";");
-                }
-
-
-        return  sb.substring(0,sb.length()-1)+"}";
-    }
-
-    public Contract(ContractType contractType, LocalDate createdDate, State state) {
+    public Contract(ContractType contractType, LocalDate createdDate, State state) throws ContractException {
         idNumber = GenerateId.Contract.getId();
         this.contractType = contractType;
+        if(createdDate.isAfter(LocalDate.now())){
+            throw new ContractException("Data e krijimit per kontraten eshte dhene gabimisht!");
+        }
         this.createdDate=createdDate;
         this.state = state;
         subscriptions = new ArrayList<Subscription>();
@@ -57,12 +51,26 @@ public class Contract {
         return createdDate;
     }
 
+    public void setState(State state) {
+        this.state = state;
+    }
+
     public boolean writeSubscription(Subscription s){
         if(!subscriptions.contains(s)){
             subscriptions.add(s);
             return true;
         }
         return false;
+    }
+    public String getSubscriptions() {
+
+        StringBuilder sb=new StringBuilder("{");
+        for (Subscription s:subscriptions) {
+            sb.append(s.getIdNumber()).append(";");
+        }
+
+
+        return  sb.substring(0,sb.length()-1)+"}";
     }
 
     public boolean equals(Object o){

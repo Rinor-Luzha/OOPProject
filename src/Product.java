@@ -1,3 +1,5 @@
+import exceptions.ProductException;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +14,7 @@ public class Product {
     private LocalDate toDateTime;
 
     public Product(String name, double price, LocalDate fromDateTime, LocalDate toDateTime)throws ProductException {
-        if (name.trim().isEmpty()) {
+        if (StringUtils.nullOrEmpty(name)) {
             throw new ProductException("Emri produktit eshte i zbrazet!");
         }
         if (price < 0) {
