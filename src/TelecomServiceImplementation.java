@@ -1,6 +1,10 @@
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class TelecomServiceImplementation<E> implements TelecomService<E>{
 
@@ -69,8 +73,33 @@ public class TelecomServiceImplementation<E> implements TelecomService<E>{
     }
 
     @Override
-    public void delete() {
+    public void delete(String id) throws IOException{
+        String sub=id.substring(0,4);
+        String path=null;
+        switch (sub){
+            case "CUST":
+                path="Customer";
+                break;
 
+            case "SUBS":
+                path="Subscription";
+                break;
+            case "CONT":
+                path="Contract";
+                break;
+            default:
+                //throw exception id gabim anajsen
+        }
+        File file=new File("C:\\Users\\Lenovo\\Desktop\\OOPProject\\out\\production\\OOPProject\\"+path+".txt");
+        List<String> records= Files.readAllLines(file.toPath()).stream()
+                .filter(row->!row.startsWith(id))
+                .collect(Collectors.toList());
+
+        try (FileWriter fw=new FileWriter(file)){
+            for (String record : records) {
+                fw.write(record+"\n");
+            }
+        }
     }
 
     @Override
