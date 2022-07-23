@@ -1,3 +1,5 @@
+package telecom;
+
 import exceptions.ServiceException;
 
 import java.io.*;
@@ -216,7 +218,7 @@ public class TelecomServiceImplementation<E> implements TelecomService<E>{
         String idNumber=tokens[0];
         Customer.CustomerType customerType= Customer.CustomerType.valueOf(tokens[1]);
         LocalDate createdDate=LocalDate.parse(tokens[2]);
-        State state=State.valueOf(tokens[3]);
+        State state= State.valueOf(tokens[3]);
         String contracts=tokens[4].substring(1, tokens[4].length()-1);
         String[] contractsIds=contracts.split(";");
         List<Contract> list=new ArrayList<>();
@@ -243,9 +245,9 @@ public class TelecomServiceImplementation<E> implements TelecomService<E>{
 
     private Contract toContract(String[] tokens) throws IOException {
         String idNumber=tokens[0];
-        Contract.ContractType contractType=Contract.ContractType.valueOf(tokens[1]);
+        Contract.ContractType contractType= Contract.ContractType.valueOf(tokens[1]);
         LocalDate createdDate=LocalDate.parse(tokens[2]);
-        State state=State.valueOf(tokens[3]);
+        State state= State.valueOf(tokens[3]);
         String subscriptions=tokens[4].substring(1, tokens[4].length()-1);
         String[] subscriptionsIds=subscriptions.split(";");
         List<Subscription> list=new ArrayList<>();
@@ -273,7 +275,7 @@ public class TelecomServiceImplementation<E> implements TelecomService<E>{
         String idNumber=tokens[0];
         String phoneNumber=tokens[1];
         LocalDate createdDate=LocalDate.parse(tokens[2]);
-        State state=State.valueOf(tokens[3]);
+        State state= State.valueOf(tokens[3]);
         return Subscription.querySubscriptionFile(idNumber,phoneNumber,createdDate,state);
     }
 

@@ -1,6 +1,7 @@
 import exceptions.ContactException;
 import exceptions.ProductException;
 import exceptions.SubscriptionException;
+import telecom.TelecomServiceImplementation;
 
 import java.io.IOException;
 
