@@ -48,7 +48,7 @@ public class Service {
 
     @Override
     public String toString() {
-        return String.format("main.Service with ID:'%S', type:%s created on '%s' " +
+        return String.format("Service with ID:'%S', type:%s created on '%s' " +
                 "and with state %s",idNumber,serviceType.getClass().getSimpleName(),createdDate,state);
     }
 

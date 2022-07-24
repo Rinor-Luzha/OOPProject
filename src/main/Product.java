@@ -90,11 +90,11 @@ public class Product {
     }
 
     public String toString(){
-        StringBuilder sb=new StringBuilder("main.Product "+name+", has price: "+price+
+        StringBuilder sb=new StringBuilder("Product "+name+", has price: "+price+
                 ", is available from '"+fromDateTime+
                 "' until '"+toDateTime +"', and has the following service types:\n\t\t");
         for(ServiceType s:serviceTypes) {
-            sb.append(s.getClass().getName());
+            sb.append(s.getClass().getSimpleName());
             sb.append(", ");
         }
         return sb.substring(0,sb.length()-2)+".";
