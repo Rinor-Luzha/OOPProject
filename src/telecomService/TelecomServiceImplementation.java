@@ -327,4 +327,23 @@ public class TelecomServiceImplementation<E> implements TelecomService<E>{
     }
 
 
+    public  void specificProduct(String s) throws IOException {
+        File file=new File("C:\\Users\\Lenovo\\Desktop\\OOPProject\\out\\production\\OOPProject\\Customer.txt");
+
+        List<Customer> records=  Files.readAllLines(file.toPath()).stream()
+                .map(row->row.split(","))
+                .filter(array->array.length==6)
+                .filter(array->array[5].contains(s))
+                .map(array-> {
+                    try {
+                        return toCustomer(array);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                })
+                .collect(Collectors.toList());
+
+        records.forEach(System.out::println);
+
+    }
 }
