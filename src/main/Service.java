@@ -1,6 +1,7 @@
-
+package main;
 
 import exceptions.ServiceException;
+import main.ServiceTypes.ServiceType;
 
 import java.time.LocalDate;
 import java.util.Objects;
@@ -15,7 +16,7 @@ public class Service {
         idNumber=GenerateId.Service.getId();
         this.serviceType=serviceType;
         if(createdDate.isAfter(LocalDate.now())){
-            throw new ServiceException("Data e krijimit per servisin eshte dhene gabimisht!");
+            throw new ServiceException("main.ServiceTypes.Data e krijimit per servisin eshte dhene gabimisht!");
         }
         this.createdDate = createdDate;
         this.state = state;
@@ -47,7 +48,7 @@ public class Service {
 
     @Override
     public String toString() {
-        return String.format("Service with ID:'%S', type:%s created on '%s' " +
+        return String.format("main.Service with ID:'%S', type:%s created on '%s' " +
                 "and with state %s",idNumber,serviceType.getClass().getSimpleName(),createdDate,state);
     }
 

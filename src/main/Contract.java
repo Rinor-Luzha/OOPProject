@@ -1,3 +1,5 @@
+package main;
+
 import exceptions.ContractException;
 
 import java.time.LocalDate;
@@ -16,7 +18,7 @@ public class Contract {
         idNumber = GenerateId.Contract.getId();
         this.contractType = contractType;
         if(createdDate.isAfter(LocalDate.now())){
-            throw new ContractException("Data e krijimit per kontraten eshte dhene gabimisht!");
+            throw new ContractException("main.ServiceTypes.Data e krijimit per kontraten eshte dhene gabimisht!");
         }
         this.createdDate=createdDate;
         this.state = state;

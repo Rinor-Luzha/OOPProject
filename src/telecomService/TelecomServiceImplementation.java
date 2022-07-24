@@ -1,6 +1,10 @@
-package telecom;
+package telecomService;
 
 import exceptions.ServiceException;
+import main.Contract;
+import main.Customer;
+import main.State;
+import main.Subscription;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -90,14 +94,14 @@ public class TelecomServiceImplementation<E> implements TelecomService<E>{
         String filePath=null;
         switch (sub){
             case "CUST":
-                filePath="Customer.txt";
+                filePath="main.Customer.txt";
                 break;
 
             case "SUBS":
-                filePath="Subscription.txt";
+                filePath="main.Subscription.txt";
                 break;
             case "CONT":
-                filePath="Contract.txt";
+                filePath="main.Contract.txt";
                 break;
             default:
                 //throw exception id gabim anajsen
@@ -117,7 +121,7 @@ public class TelecomServiceImplementation<E> implements TelecomService<E>{
     @Override
     public E findByID(String idNumber) throws IOException {
         if(idNumber.matches("CUST_.")){
-            return (E) Files.readAllLines(Path.of(path+"Customer.txt")).stream()
+            return (E) Files.readAllLines(Path.of(path+"main.Customer.txt")).stream()
                     .map(row -> row.split(","))
                     .filter(array-> array.length==5)
                     .filter(array -> array[0].equals(idNumber))
@@ -132,7 +136,7 @@ public class TelecomServiceImplementation<E> implements TelecomService<E>{
                     })
                     .orElse(null);
         }else if(idNumber.matches("CONTRACT_.")){
-            return (E) Files.readAllLines(Path.of(path+"Contract.txt")).stream()
+            return (E) Files.readAllLines(Path.of(path+"main.Contract.txt")).stream()
                     .map(row -> row.split(","))
                     .filter(array-> array.length==5)
                     .filter(array -> array[0].equals(idNumber))
@@ -148,7 +152,7 @@ public class TelecomServiceImplementation<E> implements TelecomService<E>{
                     .orElse(null);
 
         }else if(idNumber.matches("SUBS_.")){
-            return (E) Files.readAllLines(Path.of(path+"Subscription.txt")).stream()
+            return (E) Files.readAllLines(Path.of(path+"main.Subscription.txt")).stream()
                     .map(row -> row.split(","))
                     .filter(array-> array.length==6)
                     .filter(array -> array[0].equals(idNumber))
@@ -169,8 +173,8 @@ public class TelecomServiceImplementation<E> implements TelecomService<E>{
 
     @Override
     public ArrayList<E> findAll(String type) throws IOException {
-        if(type.equalsIgnoreCase("Customer")){
-            return (ArrayList<E>) Files.readAllLines(Path.of(path+"Customer.txt")).stream()
+        if(type.equalsIgnoreCase("main.Customer")){
+            return (ArrayList<E>) Files.readAllLines(Path.of(path+"main.Customer.txt")).stream()
                     .map(row -> row.split(","))
                     .filter(array-> array.length==5)
                     .map(array -> {
@@ -182,8 +186,8 @@ public class TelecomServiceImplementation<E> implements TelecomService<E>{
                         return null;
                     })
                     .collect(Collectors.toList());
-        }else if(type.equalsIgnoreCase("Contract")){
-            return (ArrayList<E>) Files.readAllLines(Path.of(path+"Contract.txt")).stream()
+        }else if(type.equalsIgnoreCase("main.Contract")){
+            return (ArrayList<E>) Files.readAllLines(Path.of(path+"main.Contract.txt")).stream()
                     .map(row -> row.split(","))
                     .filter(array-> array.length==5)
                     .map(array -> {
@@ -196,8 +200,8 @@ public class TelecomServiceImplementation<E> implements TelecomService<E>{
                     })
                     .collect(Collectors.toList());
 
-        }else if(type.equalsIgnoreCase("Subscription")){
-            return (ArrayList<E>) Files.readAllLines(Path.of(path+"Subscription.txt")).stream()
+        }else if(type.equalsIgnoreCase("main.Subscription")){
+            return (ArrayList<E>) Files.readAllLines(Path.of(path+"main.Subscription.txt")).stream()
                     .map(row -> row.split(","))
                     .filter(array-> array.length==6)
                     .map(array -> {
@@ -223,7 +227,7 @@ public class TelecomServiceImplementation<E> implements TelecomService<E>{
         String[] contractsIds=contracts.split(";");
         List<Contract> list=new ArrayList<>();
         for(String contrId:contractsIds){
-            Contract c= Files.readAllLines(Path.of(path+"Contract.txt")).stream()
+            Contract c= Files.readAllLines(Path.of(path+"main.Contract.txt")).stream()
                     .map(row -> row.split(","))
                     .filter(array-> array.length==5)
                     .filter(array -> array[0].equals(contrId))
@@ -252,7 +256,7 @@ public class TelecomServiceImplementation<E> implements TelecomService<E>{
         String[] subscriptionsIds=subscriptions.split(";");
         List<Subscription> list=new ArrayList<>();
         for(String subId:subscriptionsIds){
-            Subscription s= Files.readAllLines(Path.of(path+"Subscription.txt")).stream()
+            Subscription s= Files.readAllLines(Path.of(path+"main.Subscription.txt")).stream()
                     .map(row -> row.split(","))
                     .filter(array-> array.length==6)
                     .filter(array -> array[0].equals(subId))

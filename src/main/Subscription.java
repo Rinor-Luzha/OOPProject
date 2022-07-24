@@ -1,5 +1,10 @@
+package main;
+
 import exceptions.ServiceException;
 import exceptions.SubscriptionException;
+import main.ServiceTypes.SMS;
+import main.ServiceTypes.ServiceType;
+import main.ServiceTypes.Voice;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -22,7 +27,7 @@ public class Subscription {
         }
         this.phoneNumber = phoneNumber;
         if(createdDate.isAfter(LocalDate.now())){
-            throw new SubscriptionException("Data e krijimit per subscription eshte dhene gabimisht!");
+            throw new SubscriptionException("main.ServiceTypes.Data e krijimit per subscription eshte dhene gabimisht!");
         }
         this.createdDate = createdDate;
         this.state = state;

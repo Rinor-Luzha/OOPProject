@@ -1,4 +1,4 @@
-package telecom;
+package telecomService;
 
 import java.io.IOException;
 import java.util.ArrayList;

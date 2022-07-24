@@ -1,4 +1,7 @@
+package main;
+
 import exceptions.ProductException;
+import main.ServiceTypes.ServiceType;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -87,7 +90,7 @@ public class Product {
     }
 
     public String toString(){
-        StringBuilder sb=new StringBuilder("Product "+name+", has price: "+price+
+        StringBuilder sb=new StringBuilder("main.Product "+name+", has price: "+price+
                 ", is available from '"+fromDateTime+
                 "' until '"+toDateTime +"', and has the following service types:\n\t\t");
         for(ServiceType s:serviceTypes) {

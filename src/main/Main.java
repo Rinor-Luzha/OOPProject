@@ -1,7 +1,9 @@
+package main;
+
 import exceptions.ContactException;
 import exceptions.ProductException;
 import exceptions.SubscriptionException;
-import telecom.TelecomServiceImplementation;
+import telecomService.TelecomServiceImplementation;
 
 import java.io.IOException;
 
@@ -9,18 +11,18 @@ public class Main {
 
 
     public static void main(String[] args) throws SubscriptionException, ContactException, IOException, ProductException {
-//        Subscription s=new Subscription("+3834512342",LocalDate.now(),State.ACTIVE);
-//        Subscription s1=new Subscription("+3834512342",LocalDate.now(),State.ACTIVE);
+//        main.Subscription s=new main.Subscription("+3834512342",LocalDate.now(),main.State.ACTIVE);
+//        main.Subscription s1=new main.Subscription("+3834512342",LocalDate.now(),main.State.ACTIVE);
 //
-//        Customer c1=new Customer(Customer.CustomerType.BUSINESS,LocalDate.now(),State.INACTIVE);
-//        Customer c2=new Customer(Customer.CustomerType.INDIVIDUAL,LocalDate.now(),State.ACTIVE);
-//        Customer c3=new Customer(Customer.CustomerType.BUSINESS,LocalDate.now(),State.INACTIVE);
+//        main.Customer c1=new main.Customer(main.Customer.CustomerType.BUSINESS,LocalDate.now(),main.State.INACTIVE);
+//        main.Customer c2=new main.Customer(main.Customer.CustomerType.INDIVIDUAL,LocalDate.now(),main.State.ACTIVE);
+//        main.Customer c3=new main.Customer(main.Customer.CustomerType.BUSINESS,LocalDate.now(),main.State.INACTIVE);
 //
 //
-//        Contract co=new Contract(Contract.ContractType.POSTPAID,LocalDate.MAX,State.INACTIVE);
+//        main.Contract co=new main.Contract(main.Contract.ContractType.POSTPAID,LocalDate.MAX,main.State.INACTIVE);
 //
-//        Product p1=new Product("voice",24.2,LocalDate.parse("2021-12-03"),LocalDate.parse("2022-12-03"));
-//        p1.addServiceType(new Voice());
+//        main.Product p1=new main.Product("voice",24.2,LocalDate.parse("2021-12-03"),LocalDate.parse("2022-12-03"));
+//        p1.addServiceType(new main.ServiceTypes.Voice());
 //
 //
 //        s.purchaseProduct(p1);
@@ -36,12 +38,12 @@ public class Main {
 //        c1.writeContract(co);
 //        System.out.println(c1);
 //
-//        ArrayList<Customer> customers=new ArrayList<>();
+//        ArrayList<main.Customer> customers=new ArrayList<>();
 //        customers.add(c1);
 //        customers.add(c2);
 //        customers.add(c3);
 //
-//        ArrayList<Contract> contracts=new ArrayList<>();
+//        ArrayList<main.Contract> contracts=new ArrayList<>();
 //        contracts.add(co);
 //        ArrayList<Object> subscriptions=new ArrayList<>();
 //        subscriptions.add(s);
