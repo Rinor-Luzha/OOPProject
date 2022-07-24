@@ -67,6 +67,10 @@ public class Subscription {
         return state;
     }
 
+    public void setState(State state) {
+        this.state = state;
+    }
+
     public List<Service> getServiceList(){
         return services;
     }

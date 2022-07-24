@@ -132,6 +132,11 @@ public class Contact {
     public State getState() {
         return state;
     }
+
+    public void setState(State state) {
+        this.state = state;
+    }
+
     public boolean equals(Object o){
         if(o instanceof Contact c){
             return c.idNumber.equals(idNumber);
