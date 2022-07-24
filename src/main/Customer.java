@@ -1,6 +1,7 @@
 package main;
 
 import exceptions.CustomerException;
+import main.ServiceTypes.ServiceType;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ public class Customer {
     private LocalDate createdDate;
     private State state;
     private List<Contract> contracts;
+    private List<Product> products;
     public Customer(CustomerType customerType,LocalDate createdDate,State state) throws CustomerException {
         if(createdDate.isAfter(LocalDate.now())){
             throw new CustomerException("main.ServiceTypes.Data e krijimit per konsumatorin eshte dhene gabimisht!");
@@ -21,18 +23,20 @@ public class Customer {
         this.customerType=customerType;
         this.createdDate=createdDate;
         this.state=state;
+        products=new ArrayList<>();
         contracts=new ArrayList<Contract>();//data structure can be changed with any other type of list
     }
 
-    private Customer(String idNumber, CustomerType customerType, LocalDate createdDate, State state, List<Contract> contracts) {
+    private Customer(String idNumber, CustomerType customerType, LocalDate createdDate, State state, List<Contract> contracts,List<Product> products) {
         this.idNumber = idNumber;
         this.customerType = customerType;
         this.createdDate = createdDate;
         this.state = state;
         this.contracts = contracts;
+        this.products=products;
     }
-    public static Customer queryCustomerFile(String idNumber, CustomerType customerType, LocalDate createdDate, State state, List<Contract> contracts){
-        return new Customer(idNumber, customerType, createdDate, state, contracts);
+    public static Customer queryCustomerFile(String idNumber, CustomerType customerType, LocalDate createdDate, State state, List<Contract> contracts,List<Product> products){
+        return new Customer(idNumber, customerType, createdDate, state, contracts,products);
     }
 
 
@@ -56,6 +60,9 @@ public class Customer {
         this.state = state;
     }
 
+    public List<Product> getProductList(){
+        return products;
+    }
 
 
     public boolean writeContract(Contract c){
@@ -78,6 +85,41 @@ public class Customer {
 
         return  sb.substring(0,sb.length()-1)+"}";
     }
+    public boolean purchaseProduct(Product p){
+        if(p.getServiceTypeList().size()==0){
+            return false;
+        }
+        if(!LocalDate.now().isAfter(p.getFromDateTime()))
+            return false;
+        if(!LocalDate.now().isBefore(p.getToDateTime()))
+            return false;
+        ArrayList<String> customerServices=new ArrayList<>();
+        for(Contract contract:contracts){
+            for(Subscription subscription:contract.getSubscriptionList()){
+                for(Service service:subscription.getServiceList()){
+                    customerServices.add(service.getServiceType().getClass().getSimpleName());
+                }
+            }
+        }
+        for(ServiceType s: p.getServiceTypeList()){
+            String serviceType=s.getClass().getSimpleName();
+            if(!customerServices.contains(serviceType)){
+                return false;
+            }
+        }
+        products.add(p);
+        return true;
+    }
+    public String getProducts() {
+        if (products.size() == 0) {
+            return null;
+        }
+        StringBuilder sb = new StringBuilder("{");
+        for (Product p : products) {
+            sb.append(p.getIdNumber()).append(";");
+        }
+        return  sb.substring(0,sb.length()-1)+"}";
+    }
 
     public boolean equals(Object o){
         if(o instanceof Customer c){
@@ -93,6 +135,11 @@ public class Customer {
                 " state, has the following contracts:\n");
         for(Contract c:contracts){
             sb.append("\t").append(c);
+            sb.append("\n");
+        }
+        sb.append("And the following products:\n");
+        for(Product p:products) {
+            sb.append("\t").append(p);
             sb.append("\n");
         }
         return sb.toString();

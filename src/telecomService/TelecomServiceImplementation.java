@@ -1,10 +1,9 @@
 package telecomService;
 
+import exceptions.ProductException;
 import exceptions.ServiceException;
-import main.Contract;
-import main.Customer;
-import main.State;
-import main.Subscription;
+import main.*;
+import main.ServiceTypes.*;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -29,8 +28,13 @@ public class TelecomServiceImplementation<E> implements TelecomService<E>{
         FileWriter fw = new FileWriter(path + list.get(0).getClass().getSimpleName() + ".txt");
         if (list.get(0) instanceof Customer) {
             ArrayList<Customer> customers= (ArrayList<Customer>) list;
+            FileWriter fw1 = new FileWriter(path  +"Product.txt");
             for (Customer c1:customers){
-                fw.write(String.format("%S,%S,%S,%S,%s\n", c1.getIdNumber(), c1.getCustomerType(), c1.getCreatedDate(), c1.getState(),c1.getContracts()));
+                fw.write(String.format("%S,%S,%S,%S,%s,%s\n", c1.getIdNumber(), c1.getCustomerType(), c1.getCreatedDate(), c1.getState(),c1.getContracts(),c1.getProducts()));
+                for (Product p : c1.getProductList()) {
+                    fw1.write(String.format("%S,%s,%.2f,%S,%S,%s\n", p.getIdNumber(), p.getName(), p.getPrice(), p.getFromDateTime(), p.getToDateTime(), p.getServiceTypes()));
+                    fw1.flush();
+                }
                 fw.flush();
             }
         }else if (list.get(0) instanceof Contract) {
@@ -42,7 +46,7 @@ public class TelecomServiceImplementation<E> implements TelecomService<E>{
         }else if(list.get(0) instanceof Subscription) {
             ArrayList<Subscription> subscriptions= (ArrayList<Subscription>) list;
             for (Subscription s:subscriptions){
-                fw.write(String.format("%S,%S,%s,%S,%s,%s\n", s.getIdNumber(),s.getPhoneNumber(),s.getCreatedDate(),s.getState(),s.getServices(),s.getProducts()));
+                fw.write(String.format("%S,%S,%s,%S,%s\n", s.getIdNumber(),s.getPhoneNumber(),s.getCreatedDate(),s.getState(),s.getServices()));
                 fw.flush();
             }
         }
@@ -123,7 +127,7 @@ public class TelecomServiceImplementation<E> implements TelecomService<E>{
         if(idNumber.matches("CUST_.")){
             return (E) Files.readAllLines(Path.of(path+"Customer.txt")).stream()
                     .map(row -> row.split(","))
-                    .filter(array-> array.length==5)
+                    .filter(array-> array.length==6)
                     .filter(array -> array[0].equals(idNumber))
                     .findFirst()
                     .map(array -> {
@@ -154,7 +158,7 @@ public class TelecomServiceImplementation<E> implements TelecomService<E>{
         }else if(idNumber.matches("SUBS_.")){
             return (E) Files.readAllLines(Path.of(path+"Subscription.txt")).stream()
                     .map(row -> row.split(","))
-                    .filter(array-> array.length==6)
+                    .filter(array-> array.length==5)
                     .filter(array -> array[0].equals(idNumber))
                     .findFirst()
                     .map(array -> {
@@ -176,7 +180,7 @@ public class TelecomServiceImplementation<E> implements TelecomService<E>{
         if(type.equalsIgnoreCase("Customer")){
             return (ArrayList<E>) Files.readAllLines(Path.of(path+"Customer.txt")).stream()
                     .map(row -> row.split(","))
-                    .filter(array-> array.length==5)
+                    .filter(array-> array.length==6)
                     .map(array -> {
                         try {
                             return toCustomer(array);
@@ -203,7 +207,7 @@ public class TelecomServiceImplementation<E> implements TelecomService<E>{
         }else if(type.equalsIgnoreCase("Subscription")){
             return (ArrayList<E>) Files.readAllLines(Path.of(path+"Subscription.txt")).stream()
                     .map(row -> row.split(","))
-                    .filter(array-> array.length==6)
+                    .filter(array-> array.length==5)
                     .map(array -> {
                         try {
                             return toSubscription(array);
@@ -225,7 +229,7 @@ public class TelecomServiceImplementation<E> implements TelecomService<E>{
         State state= State.valueOf(tokens[3]);
         String contracts=tokens[4].substring(1, tokens[4].length()-1);
         String[] contractsIds=contracts.split(";");
-        List<Contract> list=new ArrayList<>();
+        List<Contract> contractList=new ArrayList<>();
         for(String contrId:contractsIds){
             Contract c= Files.readAllLines(Path.of(path+"Contract.txt")).stream()
                     .map(row -> row.split(","))
@@ -241,9 +245,29 @@ public class TelecomServiceImplementation<E> implements TelecomService<E>{
                         return null;
                     })
                     .orElse(null);
-            list.add(c);
+            contractList.add(c);
         }
-        return Customer.queryCustomerFile(idNumber,customerType,createdDate,state,list);
+        String products=tokens[5].substring(1, tokens[5].length()-1);
+        String[] productId=products.split(";");
+        List<Product> productList=new ArrayList<>();
+        for(String prodId:productId){
+            Product p= Files.readAllLines(Path.of(path+"Product.txt")).stream()
+                    .map(row -> row.split(","))
+                    .filter(array-> array.length==6)
+                    .filter(array -> array[0].equals(prodId))
+                    .findFirst()
+                    .map(array -> {
+                        try {
+                            return toProduct(array);
+                        } catch (ProductException e) {
+                            e.printStackTrace();
+                        }
+                        return null;
+                    })
+                    .orElse(null);
+            productList.add(p);
+        }
+        return Customer.queryCustomerFile(idNumber,customerType,createdDate,state,contractList,productList);
 
     }
 
@@ -258,7 +282,7 @@ public class TelecomServiceImplementation<E> implements TelecomService<E>{
         for(String subId:subscriptionsIds){
             Subscription s= Files.readAllLines(Path.of(path+"Subscription.txt")).stream()
                     .map(row -> row.split(","))
-                    .filter(array-> array.length==6)
+                    .filter(array-> array.length==5)
                     .filter(array -> array[0].equals(subId))
                     .findFirst()
                     .map(array -> {
@@ -281,6 +305,25 @@ public class TelecomServiceImplementation<E> implements TelecomService<E>{
         LocalDate createdDate=LocalDate.parse(tokens[2]);
         State state= State.valueOf(tokens[3]);
         return Subscription.querySubscriptionFile(idNumber,phoneNumber,createdDate,state);
+    }
+    private Product toProduct(String[] tokens)throws ProductException{
+        String idNumber=tokens[0];
+        String name=tokens[1];
+        double price=Double.parseDouble(tokens[2]);
+        LocalDate fromDateTime=LocalDate.parse(tokens[3]);
+        LocalDate toDateTime=LocalDate.parse(tokens[4]);
+        List<ServiceType> serviceTypes=new ArrayList<ServiceType>();
+        String servicesString=tokens[5].substring(1, tokens[5].length()-1);
+        String[] services=servicesString.split(";");
+        for(String service:services){
+            switch (service){
+                case "Data"->serviceTypes.add(new Data());
+                case "SimCard"->serviceTypes.add(new SimCard());
+                case "SMS"->serviceTypes.add(new SMS());
+                case "Voice"->serviceTypes.add(new Voice());
+            }
+        }
+        return Product.queryFileProduct(idNumber,name,price,fromDateTime,toDateTime,serviceTypes);
     }
 
 

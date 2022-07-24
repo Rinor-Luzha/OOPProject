@@ -35,15 +35,16 @@ public class Product {
         this.toDateTime = toDateTime;
     }
 
-    private Product(String idNumber, String name, double price, LocalDate fromDateTime, LocalDate toDateTime) {
+    private Product(String idNumber, String name, double price, LocalDate fromDateTime, LocalDate toDateTime,List<ServiceType> serviceTypes) {
         this.idNumber = idNumber;
         this.name = name;
         this.price = price;
         this.fromDateTime = fromDateTime;
         this.toDateTime = toDateTime;
+        this.serviceTypes=serviceTypes;
     }
-    public static Product queryFileProduct(String idNumber, String name, double price, LocalDate fromDateTime, LocalDate toDateTime){
-        return new Product(idNumber,name,price,fromDateTime,toDateTime);
+    public static Product queryFileProduct(String idNumber, String name, double price, LocalDate fromDateTime, LocalDate toDateTime, List<ServiceType> serviceTypes){
+        return new Product(idNumber,name,price,fromDateTime,toDateTime,serviceTypes);
     }
 
     public String getIdNumber() {
@@ -58,7 +59,7 @@ public class Product {
         return price;
     }
 
-    public List<ServiceType> getServiceTypes() {
+    public List<ServiceType> getServiceTypeList() {
         return serviceTypes;
     }
 
@@ -80,6 +81,16 @@ public class Product {
             return true;
         }
         return false;
+    }
+    public String getServiceTypes(){
+        if(serviceTypes.size()==0){
+            return null;
+        }
+        StringBuilder sb=new StringBuilder("{");
+        for(ServiceType s:serviceTypes){
+            sb.append(s.getClass().getSimpleName()).append(";");
+        }
+        return  sb.substring(0,sb.length()-1)+"}";
     }
 
     public boolean equals(Object o){

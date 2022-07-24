@@ -1,6 +1,8 @@
 package main;
 
 import exceptions.*;
+import main.ServiceTypes.SMS;
+import main.ServiceTypes.Voice;
 import telecomService.TelecomServiceImplementation;
 
 import java.io.IOException;
@@ -26,9 +28,6 @@ public class Main {
 //        main.Product p1=new main.Product("voice",24.2,LocalDate.parse("2021-12-03"),LocalDate.parse("2022-12-03"));
 //        p1.addServiceType(new main.ServiceTypes.Voice());
 //
-//
-//        s.purchaseProduct(p1);
-//
 //        co.writeSubscription(s);
 //        co.writeSubscription(s1);
 //
@@ -52,9 +51,18 @@ public class Main {
 //        subscriptions.add(s1);
 //
 //
+//        c1.purchaseProduct(p1);
+//        Product p2=new Product("spo di",21.3,LocalDate.parse("2021-10-02"),LocalDate.parse("2022-10-02"));
+//        p2.addServiceType(new Voice());
+//        p2.addServiceType(new SMS());
+//        c1.purchaseProduct(p2);
+//        Product p3=new Product("spo di",21.3,LocalDate.parse("2021-10-02"),LocalDate.parse("2022-10-02"));
+//        c1.purchaseProduct(p3);
+//        c2.purchaseProduct(p3);
+//        System.out.println(c1);
+//        System.out.println(c2);
 //
-//
-        TelecomServiceImplementation t1=new TelecomServiceImplementation("C:\\Users\\rinor\\OneDrive\\Desktop\\");
+//        TelecomServiceImplementation t1=new TelecomServiceImplementation("C:\\Users\\rinor\\OneDrive\\Desktop\\");
 //
 //
 //        t1.create(customers);
@@ -62,15 +70,7 @@ public class Main {
 //        t1.create(contracts);
 //        t1.create(subscriptions);
 
-//        System.out.println(t1.findByID("CUST_1"));
-//        t1.delete("CUST_1");
-//        System.out.println(t1.findByID("CUST_1"));
-        ArrayList<Customer> customers=t1.findAll("CusTomer");
 
-        customers.get(0).setState(State.INACTIVE);
-        System.out.println(customers);
-        customers=t1.update( customers,"CUST_2");
-        System.out.println(customers);
 
 
     }

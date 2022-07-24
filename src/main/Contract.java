@@ -64,6 +64,9 @@ public class Contract {
         }
         return false;
     }
+    public List<Subscription> getSubscriptionList(){
+        return subscriptions;
+    }
     public String getSubscriptions() {
 
         StringBuilder sb=new StringBuilder("{");

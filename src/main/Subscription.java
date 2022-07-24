@@ -18,7 +18,6 @@ public class Subscription {
     private State state;
 
     private List<Service> services;
-    private List<Product> products;
 
     public Subscription(String phoneNumber, LocalDate createdDate, State state) throws SubscriptionException, ServiceException {
         this.idNumber = GenerateId.Subscription.getId();
@@ -33,25 +32,22 @@ public class Subscription {
         this.state = state;
 
         this.services=new ArrayList<>();
-        this.products=new ArrayList<>();
-
         services.add(new Service(new SMS(),LocalDate.now(),State.ACTIVE));
         services.add(new Service(new Voice(),LocalDate.now(),State.ACTIVE));
     }
 
-    private Subscription(String idNumber, String phoneNumber, LocalDate createdDate, State state, List<Service> services, List<Product> products) {
+    private Subscription(String idNumber, String phoneNumber, LocalDate createdDate, State state, List<Service> services) {
         this.idNumber = idNumber;
         this.phoneNumber = phoneNumber;
         this.createdDate = createdDate;
         this.state = state;
         this.services = services;
-        this.products = products;
     }
     public static Subscription querySubscriptionFile(String idNumber, String phoneNumber, LocalDate createdDate, State state) throws ServiceException {
         List<Service> services=new ArrayList<>();
         services.add(new Service(new SMS(),LocalDate.now(),State.ACTIVE));
         services.add(new Service(new Voice(),LocalDate.now(),State.ACTIVE));
-        return new Subscription(idNumber,phoneNumber,createdDate,state,services,new ArrayList<>());
+        return new Subscription(idNumber,phoneNumber,createdDate,state,services);
 
     }
 
@@ -71,6 +67,9 @@ public class Subscription {
         return state;
     }
 
+    public List<Service> getServiceList(){
+        return services;
+    }
 
     public boolean addService(Service s){
         for (Service s1 : services) {
@@ -85,16 +84,6 @@ public class Subscription {
         return false;
     }
 
-    public String getProducts() {
-        if (products.size() == 0) {
-            return null;
-        }
-        StringBuilder sb = new StringBuilder("{");
-        for (Product p : products) {
-            sb.append(p.getIdNumber()).append(";");
-        }
-        return  sb.substring(0,sb.length()-1)+"}";
-    }
 
     public String getServices() {
         if (services.size() == 0) {
@@ -107,26 +96,6 @@ public class Subscription {
         return  sb.substring(0,sb.length()-1)+"}";
     }
 
-    public boolean purchaseProduct(Product p){
-        if(!LocalDate.now().isAfter(p.getFromDateTime()))
-            return false;
-        if(!LocalDate.now().isBefore(p.getToDateTime()))
-            return false;
-        for(ServiceType s:p.getServiceTypes()){
-            boolean hasServiceType=false;
-            for(Service s1:services){
-                if(s1.getServiceType().getClass().equals(s.getClass())) {
-                    hasServiceType = true;
-                    break;
-                }
-            }
-            if(!hasServiceType){
-                return false;
-            }
-        }
-        products.add(p);
-        return true;
-    }
 
     public boolean equals(Object o){
         if(o instanceof Subscription s){
@@ -143,11 +112,6 @@ public class Subscription {
                 "', with state: "+state+", has the following services: \n");
         for(Service s:services) {
             sb.append("\t").append(s);
-            sb.append("\n");
-        }
-        sb.append("And the following products:\n");
-        for(Product p:products) {
-            sb.append("\t").append(p);
             sb.append("\n");
         }
         return sb.toString();
