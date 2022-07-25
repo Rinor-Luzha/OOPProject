@@ -362,7 +362,20 @@ public class TelecomServiceImplementation<E> implements TelecomService<E>{
                 .forEach(System.out::println);;
     }
 
-
-
-
+    public void expiresInNextTen() throws IOException {
+        Files.readAllLines(Path.of(path + "Product.txt")).stream()
+                .map(row->row.split(","))
+                .filter(array->array.length==6)
+                .map(array-> {
+                    try {
+                        return toProduct(array);
+                    } catch (ProductException e) {
+                        throw new RuntimeException(e);
+                    }
+                })
+                .filter(array ->array.getToDateTime().isBefore((LocalDate.now().plusDays(11))))
+                .filter(array ->array.getToDateTime().isAfter(LocalDate.now()))
+                .collect(Collectors.toSet())
+                .forEach(System.out::println);
+    }
 }
