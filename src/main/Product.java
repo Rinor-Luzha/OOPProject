@@ -6,6 +6,7 @@ import main.ServiceTypes.ServiceType;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Product {
 
@@ -91,6 +92,11 @@ public class Product {
             sb.append(s.getClass().getSimpleName()).append(";");
         }
         return  sb.substring(0,sb.length()-1)+"}";
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(idNumber);
     }
 
     public boolean equals(Object o){

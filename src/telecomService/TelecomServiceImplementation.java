@@ -10,7 +10,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class TelecomServiceImplementation<E> implements TelecomService<E>{
@@ -326,11 +328,26 @@ public class TelecomServiceImplementation<E> implements TelecomService<E>{
         return Product.queryFileProduct(idNumber,name,price,fromDateTime,toDateTime,serviceTypes);
     }
 
+    //Metodat per filters
 
-    public  void specificProduct(String s) throws IOException {
-        File file=new File("C:\\Users\\Lenovo\\Desktop\\OOPProject\\out\\production\\OOPProject\\Customer.txt");
+    public void cheaperThanFive() throws IOException {
+        Files.readAllLines(Path.of(path + "Product.txt")).stream()
+                .map(row->row.split(","))
+                .filter(array->array.length==6)
+                .filter(array->Double.parseDouble(array[2])<5)
+                .map(array-> {
+                    try {
+                        return toProduct(array);
+                    } catch (ProductException e) {
+                        throw new RuntimeException(e);
+                    }
+                })
+                .collect(Collectors.toSet())
+                .forEach(System.out::println);
+    }
 
-        List<Customer> records=  Files.readAllLines(file.toPath()).stream()
+    public void specificProduct(String s) throws IOException {
+        Files.readAllLines(Path.of(path + "Customer.txt")).stream()
                 .map(row->row.split(","))
                 .filter(array->array.length==6)
                 .filter(array->array[5].contains(s))
@@ -341,9 +358,11 @@ public class TelecomServiceImplementation<E> implements TelecomService<E>{
                         throw new RuntimeException(e);
                     }
                 })
-                .collect(Collectors.toList());
-
-        records.forEach(System.out::println);
-
+                .collect(Collectors.toList())
+                .forEach(System.out::println);;
     }
+
+
+
+
 }
