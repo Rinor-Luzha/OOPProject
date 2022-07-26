@@ -5,11 +5,11 @@ import exceptions.ContactException;
 import java.time.LocalDate;
 
 public class Contact {
-    private String idNumber;
+    private String idNumberContact;
     public enum IdType {
-        CU("main.Customer"),
-        CO("main.Contract"),
-        SU("main.Subscription");
+        CU("Customer"),
+        CO("Contract"),
+        SU("Subscription");
         private String prefix;
         IdType(String prefix){
             this.prefix=prefix;
@@ -19,6 +19,7 @@ public class Contact {
         }
     };
     private IdType idType;
+    private String idNumber;
     private String name;
     private String lastName;
     private String customerName;
@@ -27,8 +28,8 @@ public class Contact {
     private LocalDate createdDate;
     private State state;
 
-    private Contact(IdType idType,String name, String lastName, String customerName, char gender, LocalDate dateOfBirth, LocalDate createdDate, State state) {
-        this.idNumber = GenerateId.Contact.getId();
+    private Contact(IdType idType,String idNumber,String name, String lastName, String customerName, char gender, LocalDate dateOfBirth, LocalDate createdDate, State state) {
+        this.idNumberContact = GenerateId.Contact.getId();
         this.idType=idType;
         this.name = name;
         this.lastName = lastName;
@@ -37,13 +38,11 @@ public class Contact {
         this.dateOfBirth = dateOfBirth;
         this.createdDate = createdDate;
         this.state = state;
+        this.idNumber=idNumber;
     }
 
     public Contact (Customer c, String name, String lastName, char gender, LocalDate dateOfBirth, LocalDate createdDate, State state) throws ContactException {
-        this(IdType.CU,name,lastName,null,gender,dateOfBirth,createdDate,state);
-        if(c==null){
-            throw new ContactException("Custumer i derguar per contact eshte null!");
-        }
+        this(IdType.CU,c.getIdNumber(),name,lastName,null,gender,dateOfBirth,createdDate,state);
         if(StringUtils.nullOrEmpty(name)){
             throw new ContactException("Emri per kontaktin eshte i zbrazte!");
         }
@@ -64,10 +63,7 @@ public class Contact {
         }
     }
     public Contact(Customer c,String customerName,LocalDate createdDate,State state) throws ContactException {
-        this(IdType.CU,null,null,customerName,'\u0000',null,createdDate,state);
-        if(c==null){
-            throw new ContactException("Custumer i derguar per contact eshte null!");
-        }
+        this(IdType.CU,c.getIdNumber(),null,null,customerName,'\u0000',null,createdDate,state);
         if(StringUtils.nullOrEmpty(customerName)){
             throw new ContactException("Emri per kontaktin eshte i zbrazte!");
         }
@@ -79,26 +75,20 @@ public class Contact {
         }
     }
     public Contact(Subscription s,LocalDate createdDate,State state) throws ContactException {
-        this(IdType.SU,null,null,null,'\u0000',null,createdDate,state);
-        if(s==null){
-            throw new ContactException("main.Subscription i derguar per contact eshte null!");
-        }
+        this(IdType.SU,s.getIdNumber(),null,null,null,'\u0000',null,createdDate,state);
         if(createdDate.isAfter(LocalDate.now())){
             throw new ContactException("main.ServiceTypes.Data krijimit kontaktit eshte dhene gabimisht!");
         }
     }
     public Contact(Contract c,LocalDate createdDate,State state) throws ContactException {
-        this(IdType.CO,null,null,null,'\u0000',null,createdDate,state);
-        if(c==null){
-            throw new ContactException("main.Contract e derguar per contact eshte null!");
-        }
+        this(IdType.CO,c.getIdNumber(),null,null,null,'\u0000',null,createdDate,state);
         if(createdDate.isAfter(LocalDate.now())){
             throw new ContactException("main.ServiceTypes.Data krijimit kontaktit eshte dhene gabimisht!");
         }
     }
 
-    public String getIdNumber() {
-        return idNumber;
+    public String getIdNumberContact() {
+        return idNumberContact;
     }
 
     public IdType getIdType() {
@@ -133,13 +123,17 @@ public class Contact {
         return state;
     }
 
+    public String getIdNumber() {
+        return idNumber;
+    }
+
     public void setState(State state) {
         this.state = state;
     }
 
     public boolean equals(Object o){
         if(o instanceof Contact c){
-            return c.idNumber.equals(idNumber);
+            return c.idNumberContact.equals(idNumberContact);
         }
         return false;
     }
@@ -147,19 +141,19 @@ public class Contact {
     public String toString(){
         if(idType==IdType.CU){
             if(getCustomerName()==null){
-                return idNumber + " of type: " + idType + ", belongs to Individual: \n"+
-                        name+" "+lastName+", Gender: "+(gender=='M'?"Male":"Female")+
+                return idNumberContact + " of type: " + idType + ", belongs to Individual: \n"+
+                        idNumber+" with name "+name+" "+lastName+", Gender: "+(gender=='M'?"Male":"Female")+
                         ", date of birth: "+dateOfBirth+"\n"+
                         ", was created on " + createdDate + ", with " + state +
                         " state.";
             }else{
-                return idNumber + " of type: " + idType + ", belongs to Business: \n"+
-                        customerName+"\n"+
+                return idNumberContact + " of type: " + idType + ", belongs to Business: \n"+
+                        idNumber+" with name "+customerName+"\n"+
                         ", was created on " + createdDate + ", with " + state +
                         " state.";
             }
         }else{
-            return idNumber + " of type: " + idType + ", was created on " + createdDate + ", with " + state +
+            return idNumberContact + " of type: " + idType + " with id "+idNumber+", was created on " + createdDate + ", with " + state +
                     " state.";
         }
     }

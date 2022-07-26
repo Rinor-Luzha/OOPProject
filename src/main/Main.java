@@ -21,10 +21,10 @@ public class Main {
 
 
     public static void main(String[] args) throws SubscriptionException, ContactException, IOException, ProductException, ServiceException, CustomerException, ContractException {
-//        main.Subscription s=new main.Subscription("+3834512342", LocalDate.parse("2021-10-02"),main.State.ACTIVE);
+        main.Subscription s=new main.Subscription("+3834512342", LocalDate.parse("2021-10-02"),main.State.ACTIVE);
 //        main.Subscription s1=new main.Subscription("+3834512342",LocalDate.parse("2021-10-02"),main.State.ACTIVE);
 //
-//        main.Customer c1=new main.Customer(main.Customer.CustomerType.BUSINESS,LocalDate.parse("2021-10-02"),main.State.INACTIVE);
+        main.Customer c1=new main.Customer(Customer.CustomerType.INDIVIDUAL,LocalDate.parse("2021-10-02"),main.State.INACTIVE);
 //        main.Customer c2=new main.Customer(main.Customer.CustomerType.INDIVIDUAL,LocalDate.parse("2021-10-02"),main.State.ACTIVE);
 //        main.Customer c3=new main.Customer(main.Customer.CustomerType.BUSINESS,LocalDate.parse("2021-10-02"),main.State.INACTIVE);
 //
@@ -32,7 +32,6 @@ public class Main {
 //        main.Contract co=new main.Contract(main.Contract.ContractType.POSTPAID,LocalDate.parse("2021-10-02"),main.State.INACTIVE);
 //
 //        Product p1=new Product("P1",24.2,LocalDate.parse("2021-12-03"),LocalDate.parse("2022-07-26"));
-//
 //        p1.addServiceType(new main.ServiceTypes.Voice());
 //
 //
@@ -93,16 +92,16 @@ public class Main {
 //        System.out.println(c2);
 
         TelecomServiceImplementation t1=new TelecomServiceImplementation("C:\\Users\\rinor\\OneDrive\\Desktop\\");
-
+//        Customer c, String name, String lastName, char gender, LocalDate dateOfBirth, LocalDate createdDate, State state) th
 
 //        t1.create(customers);
 //
 //        t1.create(contracts);
 //        t1.create(subscriptions);
 
-        t1.cheaperThanFive();
-        t1.specificProduct("PROD_2");
-        t1.expiresInNextTen();
+//        t1.cheaperThanFive();
+//        t1.specificProduct("PROD_2");
+//        t1.expiresInNextTen();
     }
 
 }

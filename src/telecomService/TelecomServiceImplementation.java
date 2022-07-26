@@ -359,7 +359,7 @@ public class TelecomServiceImplementation<E> implements TelecomService<E>{
                     }
                 })
                 .collect(Collectors.toList())
-                .forEach(System.out::println);;
+                .forEach(System.out::println);
     }
 
     public void expiresInNextTen() throws IOException {
