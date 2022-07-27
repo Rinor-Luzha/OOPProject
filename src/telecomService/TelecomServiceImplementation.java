@@ -2,6 +2,7 @@ package telecomService;
 
 import exceptions.ProductException;
 import exceptions.ServiceException;
+import exceptions.TelecomServiceException;
 import main.*;
 import main.ServiceTypes.*;
 
@@ -23,12 +24,12 @@ public class TelecomServiceImplementation<E> implements TelecomService<E>{
     }
 
     @Override
-    public void create(ArrayList<E> list) throws IOException {
+    public void create(ArrayList<E> list) throws IOException, TelecomServiceException {
         if(list.size()<1){
-            return;
+            throw new TelecomServiceException("Lista eshte e zbrazet nuk mund te shkruhet ne file!");
         }
-        FileWriter fw = new FileWriter(path + list.get(0).getClass().getSimpleName() + ".txt");
-        if (list.get(0) instanceof Customer) {
+        try ( FileWriter fw = new FileWriter(path + list.get(0).getClass().getSimpleName() + ".txt");){
+            if (list.get(0) instanceof Customer) {
             ArrayList<Customer> customers= (ArrayList<Customer>) list;
             FileWriter fw1 = new FileWriter(path  +"Product.txt");
             for (Customer c1:customers){
@@ -52,6 +53,8 @@ public class TelecomServiceImplementation<E> implements TelecomService<E>{
                 fw.flush();
             }
         }
+        }
+
     }
 
     @Override
@@ -95,7 +98,7 @@ public class TelecomServiceImplementation<E> implements TelecomService<E>{
     }
 
     @Override
-    public void delete(String idNumber) throws IOException{
+    public void delete(String idNumber) throws IOException,TelecomServiceException {
         String sub=idNumber.substring(0,4);
         String filePath=null;
         switch (sub){
@@ -110,7 +113,7 @@ public class TelecomServiceImplementation<E> implements TelecomService<E>{
                 filePath="Contract.txt";
                 break;
             default:
-                //throw exception id gabim anajsen
+               throw new TelecomServiceException("ID nuk eshte ne rregull!");
         }
         File file=new File(path+filePath);
         List<String> records= Files.readAllLines(file.toPath()).stream()

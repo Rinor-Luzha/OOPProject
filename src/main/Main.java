@@ -108,7 +108,7 @@ public class Main {
       subscriptions.add(subscription5);
 
 
-      TelecomServiceImplementation t1 = new TelecomServiceImplementation("C:\\Users\\rinor\\OneDrive\\Desktop\\");
+      TelecomServiceImplementation t1 = new TelecomServiceImplementation("C:\\Users\\Lenovo\\Desktop\\OOPProject\\out\\production\\OOPProject\\");
 
       t1.create(customers);
 
@@ -121,7 +121,7 @@ public class Main {
 //
       t1.listByCostumerType(Customer.CustomerType.INDIVIDUAL.toString());
 
-    } catch (SubscriptionException | ServiceException | CustomerException | ContractException | ProductException e) {
+    } catch (SubscriptionException | ServiceException | CustomerException | ContractException | ProductException |TelecomServiceException e) {
       System.out.println(e.getMessage());
     } catch (IOException e) {
       e.printStackTrace();
