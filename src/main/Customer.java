@@ -142,6 +142,8 @@ public class Customer {
             sb.append("\t").append(p);
             sb.append("\n");
         }
+        System.out.println("---------");
         return sb.toString();
+
     }
 }

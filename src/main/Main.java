@@ -1,19 +1,17 @@
 package main;
 
+
 import exceptions.*;
+import main.Contract.ContractType;
 import main.ServiceTypes.*;
 import telecomService.TelecomServiceImplementation;
 
-import java.io.File;
+
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.nio.file.Files;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
+
 
 
 
@@ -21,87 +19,116 @@ public class Main {
 
 
     public static void main(String[] args) throws SubscriptionException, ContactException, IOException, ProductException, ServiceException, CustomerException, ContractException {
-        main.Subscription s=new main.Subscription("+3834512342", LocalDate.parse("2021-10-02"),main.State.ACTIVE);
-//        main.Subscription s1=new main.Subscription("+3834512342",LocalDate.parse("2021-10-02"),main.State.ACTIVE);
-//
-        main.Customer c1=new main.Customer(Customer.CustomerType.INDIVIDUAL,LocalDate.parse("2021-10-02"),main.State.INACTIVE);
-//        main.Customer c2=new main.Customer(main.Customer.CustomerType.INDIVIDUAL,LocalDate.parse("2021-10-02"),main.State.ACTIVE);
-//        main.Customer c3=new main.Customer(main.Customer.CustomerType.BUSINESS,LocalDate.parse("2021-10-02"),main.State.INACTIVE);
-//
-//
-//        main.Contract co=new main.Contract(main.Contract.ContractType.POSTPAID,LocalDate.parse("2021-10-02"),main.State.INACTIVE);
-//
-//        Product p1=new Product("P1",24.2,LocalDate.parse("2021-12-03"),LocalDate.parse("2022-07-26"));
-//        p1.addServiceType(new main.ServiceTypes.Voice());
-//
-//
-//        co.writeSubscription(s);
-//        co.writeSubscription(s1);
-//
-//        System.out.println(s);
-//        System.out.println(s1);
-//        System.out.println(c1);
-//
-//        c1.writeContract(co);
-//
-//        System.out.println(c1);
-//        Product p2=new Product("P2",4,LocalDate.parse("2021-10-02"),LocalDate.parse("2022-08-03"));
-//        Product p3=new Product("P3",21.3,LocalDate.parse("2021-10-02"),LocalDate.parse("2022-08-04"));
-//        p2.addServiceType(new Voice());
-//        p2.addServiceType(new SMS());
-//        p3.addServiceType( new SMS());
-//        p3.addServiceType(new Voice());
-//        Contract contract2=new Contract(Contract.ContractType.POSTPAID,LocalDate.now(),State.ACTIVE);
-//        Contract contract3=new Contract(Contract.ContractType.PREPAID,LocalDate.now(),State.ACTIVE);
-//        c2.writeContract(contract2);
-//        c3.writeContract(contract3);
-//        Subscription s2=new Subscription("+3834512345",LocalDate.now(),State.INACTIVE);
-//        Subscription s3=new Subscription("+3834512345",LocalDate.now(),State.INACTIVE);
-//        contract2.writeSubscription(s2);
-//        contract3.writeSubscription(s3);
-//
-//
-//
-//
-//        ArrayList<Customer> customers=new ArrayList<>();
-//        customers.add(c1);
-//        customers.add(c2);
-//        customers.add(c3);
-//
-//        ArrayList<main.Contract> contracts=new ArrayList<>();
-//        contracts.add(co);
-//        contracts.add(contract2);
-//        contracts.add(contract3);
-//
-//        ArrayList<Object> subscriptions=new ArrayList<>();
-//        subscriptions.add(s);
-//        subscriptions.add(s1);
-//        subscriptions.add(s2);
-//        subscriptions.add(s3);
-//
-//        System.out.println("----------------");
-//        System.out.println(c1.purchaseProduct(p1));
-//        System.out.println(c1.purchaseProduct(p2));
-//        System.out.println(c2.purchaseProduct(p1));
-//        System.out.println(c2.purchaseProduct(p2));
-//        System.out.println(c2.purchaseProduct(p3));
-//        System.out.println("------------------");
-//
-//
-//        System.out.println(c1);
-//        System.out.println(c2);
+        try {
 
-        TelecomServiceImplementation t1=new TelecomServiceImplementation("C:\\Users\\rinor\\OneDrive\\Desktop\\");
-//        Customer c, String name, String lastName, char gender, LocalDate dateOfBirth, LocalDate createdDate, State state) th
 
+//          Subscription subscription1 = new Subscription("+3834512345", LocalDate.parse("2021-10-02"), main.State.ACTIVE);
+//          Subscription subscription2 = new Subscription("+3834554321", LocalDate.parse("2022-03-20"), main.State.ACTIVE);
+//          Subscription subscription3 = new Subscription("+3834554123", LocalDate.parse("2022-03-20"), main.State.ACTIVE);
+//          Subscription subscription4 = new Subscription("+3834512121", LocalDate.parse("2022-03-22"), main.State.ACTIVE);
+//          Subscription subscription5 = new Subscription("+3834512456", LocalDate.parse("2022-03-23"), main.State.ACTIVE);
+//
+//          Customer customer1 = new Customer(Customer.CustomerType.INDIVIDUAL, LocalDate.parse("2022-04-15"), State.ACTIVE);
+//          Customer customer2 = new Customer(Customer.CustomerType.INDIVIDUAL, LocalDate.parse("2021-05-02"), main.State.ACTIVE);
+//          Customer customer3 = new Customer(Customer.CustomerType.BUSINESS, LocalDate.parse("2021-06-02"), main.State.ACTIVE);
+//          Customer customer4 = new Customer(Customer.CustomerType.INDIVIDUAL, LocalDate.parse("2021-06-05"), main.State.ACTIVE);
+//          Customer customer5 = new Customer(Customer.CustomerType.BUSINESS, LocalDate.parse("2021-06-07"), main.State.ACTIVE);
+//
+//          Contract contract1 = new main.Contract(ContractType.POSTPAID, LocalDate.parse("2021-07-03"), main.State.ACTIVE);
+//          Contract contract2 = new Contract(ContractType.POSTPAID, LocalDate.parse("2022-01-01"), State.ACTIVE);
+//          Contract contract3 = new Contract(ContractType.PREPAID, LocalDate.parse("2022-02-02"), State.ACTIVE);
+//          Contract contract4 = new Contract(ContractType.POSTPAID, LocalDate.parse("2022-03-02"), State.ACTIVE);
+//          Contract contract5 = new Contract(ContractType.PREPAID, LocalDate.parse("2022-03-03"), State.ACTIVE);
+//
+//          Product product1 = new Product("Product1", 13.2, LocalDate.parse("2022-07-03"), LocalDate.parse("2022-07-31"));
+//          Product product2 = new Product("Product2", 4, LocalDate.parse("2022-07-04"), LocalDate.parse("2022-08-03"));
+//          Product product3 = new Product("Product3", 21.3, LocalDate.parse("2022-07-04"), LocalDate.parse("2022-08-04"));
+//          Product product4 = new Product("Product4", 11.3, LocalDate.parse("2022-07-04"), LocalDate.parse("2022-08-04"));
+//          Product product5 = new Product("Product5", 2.3, LocalDate.parse("2022-07-10"), LocalDate.parse("2022-08-04"));
+//
+//          product1.addServiceType(new Voice());
+//          product1.addServiceType(new SMS());
+//          product2.addServiceType(new Voice());
+//          product2.addServiceType(new SMS());
+//          product3.addServiceType(new Voice());
+//          product3.addServiceType(new SMS());
+//          product4.addServiceType(new Voice());
+//          product4.addServiceType(new SMS());
+//          product5.addServiceType(new Voice());
+//          product5.addServiceType(new SMS());
+//
+//          contract1.writeSubscription(subscription1);
+//          contract2.writeSubscription(subscription2);
+//          contract3.writeSubscription(subscription3);
+//          contract4.writeSubscription(subscription4);
+//          contract5.writeSubscription(subscription5);
+//
+//          customer1.writeContract(contract1);
+//          customer2.writeContract(contract2);
+//          customer3.writeContract(contract3);
+//          customer4.writeContract(contract4);
+//          customer5.writeContract(contract5);
+//
+//
+//          customer1.purchaseProduct(product1);
+//          customer1.purchaseProduct(product2);
+//          customer2.purchaseProduct(product1);
+//          customer2.purchaseProduct(product2);
+//          customer2.purchaseProduct(product3);
+//          customer3.purchaseProduct(product4);
+//          customer3.purchaseProduct(product5);
+//          customer4.purchaseProduct(product5);
+//
+//
+//          ArrayList<Customer> customers = new ArrayList<>();
+//          customers.add(customer1);
+//          customers.add(customer2);
+//          customers.add(customer3);
+//          customers.add(customer4);
+//          customers.add(customer5);
+//
+//          ArrayList<main.Contract> contracts = new ArrayList<>();
+//          contracts.add(contract1);
+//          contracts.add(contract2);
+//          contracts.add(contract3);
+//          contracts.add(contract4);
+//          contracts.add(contract5);
+//
+//          ArrayList<Object> subscriptions = new ArrayList<>();
+//          subscriptions.add(subscription1);
+//          subscriptions.add(subscription2);
+//          subscriptions.add(subscription3);
+//          subscriptions.add(subscription4);
+//          subscriptions.add(subscription5);
+//
+//
+            TelecomServiceImplementation t1 = new TelecomServiceImplementation("C:\\Users\\Lenovo\\Desktop\\OOPProject\\out\\production\\OOPProject\\");
+//
 //        t1.create(customers);
 //
 //        t1.create(contracts);
 //        t1.create(subscriptions);
 
-//        t1.cheaperThanFive();
-//        t1.specificProduct("PROD_2");
-//        t1.expiresInNextTen();
-    }
+            t1.cheaperThanFive();
+            t1.specificProduct("PROD_5");
+            t1.expiresInNextTen();
 
+//      } catch (SubscriptionException e) {
+//          throw new RuntimeException(e);
+//      } catch (ServiceException e) {
+//          throw new RuntimeException(e);
+//      } catch (CustomerException e) {
+//          throw new RuntimeException(e);
+//      } catch (ContractException e) {
+//          throw new RuntimeException(e);
+//      } catch (ProductException e) {
+//          throw new RuntimeException(e);
+//      }
+
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
 }
