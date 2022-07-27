@@ -26,7 +26,7 @@ public class Subscription {
         }
         this.phoneNumber = phoneNumber;
         if(createdDate.isAfter(LocalDate.now())){
-            throw new SubscriptionException("main.ServiceTypes.Data e krijimit per subscription eshte dhene gabimisht!");
+            throw new SubscriptionException("Data e krijimit per subscription eshte dhene gabimisht!");
         }
         this.createdDate = createdDate;
         this.state = state;

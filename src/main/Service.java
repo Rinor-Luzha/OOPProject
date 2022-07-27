@@ -16,7 +16,7 @@ public class Service {
         idNumber=GenerateId.Service.getId();
         this.serviceType=serviceType;
         if(createdDate.isAfter(LocalDate.now())){
-            throw new ServiceException("main.ServiceTypes.Data e krijimit per servisin eshte dhene gabimisht!");
+            throw new ServiceException("Data e krijimit per servisin eshte dhene gabimisht!");
         }
         this.createdDate = createdDate;
         this.state = state;

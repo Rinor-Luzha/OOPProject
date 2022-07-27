@@ -22,7 +22,7 @@ public class Product {
             throw new ProductException("Emri produktit eshte i zbrazet!");
         }
         if (price < 0) {
-            throw new ProductException("Qmimi i produktit me i vogel se 0!");
+            throw new ProductException("Cmimi i produktit me i vogel se 0!");
         }
 
         if (fromDateTime.isAfter(toDateTime)) {

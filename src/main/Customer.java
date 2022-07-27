@@ -17,7 +17,7 @@ public class Customer {
     private List<Product> products;
     public Customer(CustomerType customerType,LocalDate createdDate,State state) throws CustomerException {
         if(createdDate.isAfter(LocalDate.now())){
-            throw new CustomerException("ServiceTypes.Data e krijimit per konsumatorin eshte dhene gabimisht!");
+            throw new CustomerException("Data e krijimit per konsumatorin eshte dhene gabimisht!");
         }
         idNumber=GenerateId.Customer.getId();
         this.customerType=customerType;
