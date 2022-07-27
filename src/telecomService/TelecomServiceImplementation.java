@@ -378,4 +378,22 @@ public class TelecomServiceImplementation<E> implements TelecomService<E>{
                 .collect(Collectors.toSet())
                 .forEach(System.out::println);
     }
+
+     public void listByCostumerType(String type) throws IOException {
+
+        File file=new File(path+"Customer.txt");
+        ArrayList<Customer> records= (ArrayList<Customer>) Files.readAllLines(file.toPath()).stream()
+                .map(row->row.split(","))
+                .filter(array->array[1].equalsIgnoreCase(type))
+                .map(array-> {
+                    try {
+                        return toCustomer(array);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                })
+                .collect(Collectors.toList());
+        records.forEach(System.out::println);
+
+     }
 }
