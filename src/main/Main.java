@@ -109,9 +109,11 @@ public class Main {
 //        t1.create(contracts);
 //        t1.create(subscriptions);
 
-            t1.cheaperThanFive();
-            t1.specificProduct("PROD_5");
-            t1.expiresInNextTen();
+//            t1.cheaperThanFive();
+//            t1.specificProduct("PROD_5");
+//            t1.expiresInNextTen();
+//
+            t1.listByCostumerType(Customer.CustomerType.INDIVIDUAL.toString());
 
 //      } catch (SubscriptionException e) {
 //          throw new RuntimeException(e);
