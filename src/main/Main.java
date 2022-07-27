@@ -108,18 +108,18 @@ public class Main {
       subscriptions.add(subscription5);
 
 
-      TelecomServiceImplementation t1 = new TelecomServiceImplementation("C:\\Users\\Lenovo\\Desktop\\OOPProject\\out\\production\\OOPProject\\");
+      TelecomServiceImplementation t1 = new TelecomServiceImplementation("C:\\Users\\rinor\\OneDrive\\Desktop\\LIFE Gjirafa\\");
 
       t1.create(customers);
 
       t1.create(contracts);
       t1.create(subscriptions);
 
-//            t1.cheaperThanFive();
-//            t1.specificProduct("PROD_5");
-//            t1.expiresInNextTen();
-//
-      t1.listByCostumerType(Customer.CustomerType.INDIVIDUAL.toString());
+//      t1.cheaperThanFive();
+//      t1.specificProduct("PROD_5");
+//      t1.expiresInNextTen();
+//      t1.listByCostumerType(Customer.CustomerType.INDIVIDUAL.toString());
+      System.out.println(t1.findAll("Customer"));
 
     } catch (SubscriptionException | ServiceException | CustomerException | ContractException | ProductException |TelecomServiceException e) {
       System.out.println(e.getMessage());

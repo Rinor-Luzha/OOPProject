@@ -129,7 +129,7 @@ public class TelecomServiceImplementation<E> implements TelecomService<E>{
 
     @Override
     public E findByID(String idNumber) throws IOException {
-        if(idNumber.matches("CUST_.")){
+        if(idNumber.matches("CUST_.*")){
             return (E) Files.readAllLines(Path.of(path+"Customer.txt")).stream()
                     .map(row -> row.split(","))
                     .filter(array-> array.length==6)
@@ -144,7 +144,7 @@ public class TelecomServiceImplementation<E> implements TelecomService<E>{
                         return null;
                     })
                     .orElse(null);
-        }else if(idNumber.matches("CONTRACT_.")){
+        }else if(idNumber.matches("CONTRACT_.*")){
             return (E) Files.readAllLines(Path.of(path+"Contract.txt")).stream()
                     .map(row -> row.split(","))
                     .filter(array-> array.length==5)
@@ -160,7 +160,7 @@ public class TelecomServiceImplementation<E> implements TelecomService<E>{
                     })
                     .orElse(null);
 
-        }else if(idNumber.matches("SUBS_.")){
+        }else if(idNumber.matches("SUBS_.*")){
             return (E) Files.readAllLines(Path.of(path+"Subscription.txt")).stream()
                     .map(row -> row.split(","))
                     .filter(array-> array.length==5)

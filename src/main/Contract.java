@@ -22,7 +22,7 @@ public class Contract {
         }
         this.createdDate=createdDate;
         this.state = state;
-        subscriptions = new ArrayList<Subscription>();
+        subscriptions = new ArrayList<>();
     }
 
     private Contract(String idNumber, LocalDate createdDate, State state, ContractType contractType, List<Subscription> subscriptions) {
@@ -73,8 +73,6 @@ public class Contract {
         for (Subscription s:subscriptions) {
             sb.append(s.getIdNumber()).append(";");
         }
-
-
         return  sb.substring(0,sb.length()-1)+"}";
     }
 

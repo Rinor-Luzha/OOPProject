@@ -77,10 +77,7 @@ public class Product {
                 return false;
             }
         }
-        if(!serviceTypes.contains(s)) {
-            serviceTypes.add(s);
-            return true;
-        }
+        serviceTypes.add(s);
         return false;
     }
     public String getServiceTypes(){
