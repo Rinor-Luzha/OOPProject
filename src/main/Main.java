@@ -20,11 +20,11 @@ public class Main {
 
   public static void main(String[] args) {
     try {
-      Subscription subscription1 = new Subscription("+3834512345", LocalDate.parse("2021-10-02"), main.State.ACTIVE);
-      Subscription subscription2 = new Subscription("+3834554321", LocalDate.parse("2022-03-20"), main.State.ACTIVE);
-      Subscription subscription3 = new Subscription("+3834554123", LocalDate.parse("2022-03-20"), main.State.ACTIVE);
-      Subscription subscription4 = new Subscription("+3834512121", LocalDate.parse("2022-03-22"), main.State.ACTIVE);
-      Subscription subscription5 = new Subscription("+3834512456", LocalDate.parse("2022-03-23"), main.State.ACTIVE);
+//      Subscription subscription1 = new Subscription("+3834512345", LocalDate.parse("2021-10-02"), main.State.ACTIVE);
+//      Subscription subscription2 = new Subscription("+3834554321", LocalDate.parse("2022-03-20"), main.State.ACTIVE);
+//      Subscription subscription3 = new Subscription("+3834554123", LocalDate.parse("2022-03-20"), main.State.ACTIVE);
+//      Subscription subscription4 = new Subscription("+3834512121", LocalDate.parse("2022-03-22"), main.State.ACTIVE);
+//      Subscription subscription5 = new Subscription("+3834512456", LocalDate.parse("2022-03-23"), main.State.ACTIVE);
 
       Customer customer1 = new Customer(Customer.CustomerType.INDIVIDUAL, LocalDate.parse("2022-04-15"), State.ACTIVE);
       Customer customer2 = new Customer(Customer.CustomerType.INDIVIDUAL, LocalDate.parse("2021-05-02"), main.State.ACTIVE);
